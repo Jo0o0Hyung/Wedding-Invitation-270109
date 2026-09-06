@@ -54,6 +54,37 @@
 
   section { padding: 4.5rem 1.8rem; position: relative; }
 
+  /* ---- 시작 화면 (탭하면 청첩장 열림 + 음악 시작) ---- */
+  body.intro-lock { overflow: hidden; height: 100vh; }
+  .intro {
+    position: fixed; inset: 0; z-index: 200;
+    background: radial-gradient(120% 80% at 50% 0%, #FAFCF6 0%, var(--paper) 55%, var(--paper-deep) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1.1rem; text-align: center; cursor: pointer;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  .intro.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+  .intro-eyebrow {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.75rem;
+    letter-spacing: 0.45em; color: var(--accent); padding-left: 0.45em;
+  }
+  .intro-names {
+    font-family: "Nanum Myeongjo", serif; font-weight: 800;
+    font-size: 1.6rem; color: var(--ink); letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 0.9rem;
+  }
+  .intro-names .amp { color: var(--accent); font-size: 1.2rem; font-weight: 400; }
+  .intro-date {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem;
+    color: var(--ink-soft); letter-spacing: 0.08em; margin-bottom: 0.6rem;
+  }
+  .intro-btn {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem; color: #fff;
+    background: var(--accent); border: none; border-radius: 40px;
+    padding: 0.9rem 2.2rem; cursor: pointer; letter-spacing: 0.05em;
+  }
+  .intro-btn:active { opacity: 0.85; }
+
   /* ---- 공통 타이포 ---- */
   .eyebrow {
     font-family: "Gowun Dodum", sans-serif;
@@ -152,7 +183,6 @@
     font-size: 0.92rem; color: var(--ink-soft);
   }
   .family .parents b { color: var(--ink); font-weight: 400; }
-  .family .rel { color: var(--accent); font-size: 0.82rem; }
   .family .child { font-family: "Nanum Myeongjo", serif; font-weight: 700; color: var(--ink); font-size: 1.1rem; }
 
   /* ============ 4. 캘린더 ============ */
@@ -370,7 +400,17 @@
   #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
-<body>
+<body class="intro-lock">
+
+<div id="introScreen" class="intro">
+  <div class="intro-eyebrow">WEDDING INVITATION</div>
+  <div class="intro-names">
+    <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
+  </div>
+  <div class="intro-date">2027. 01. 09.</div>
+  <button id="introBtn" class="intro-btn">청첩장 열기</button>
+</div>
+
 <div class="frame">
 
   <!-- ============ 1. 표지 ============ -->
@@ -409,12 +449,10 @@
     <div class="eyebrow reveal">신랑 &amp; 신부</div>
     <div class="row reveal">
       <span class="parents"><b>이춘우</b> · <b>(故)조종숙</b>의 아들</span>
-      <span class="rel">아들</span>
       <span class="child">이주형</span>
     </div>
     <div class="row reveal">
       <span class="parents"><b>임찬호</b> · <b>김금자</b>의 딸</span>
-      <span class="rel">딸</span>
       <span class="child">임유리</span>
     </div>
   </section>
@@ -663,6 +701,12 @@
       try{ await navigator.clipboard.writeText(location.href); showToast('링크가 복사되었습니다'); }
       catch(e){ showToast('주소창의 링크를 복사해 주세요'); }
     }
+  });
+
+  /* ---- 시작 화면: 탭하면 청첩장이 열리고 동시에 배경음악 소리가 켜짐 ---- */
+  document.getElementById('introBtn').addEventListener('click', ()=>{
+    document.getElementById('introScreen').classList.add('hide');
+    document.body.classList.remove('intro-lock');
   });
 
   /* ---- 배경음악: 처음부터 재생(음소거 상태로 시작), 첫 터치 시 소리 켜짐 ---- */
