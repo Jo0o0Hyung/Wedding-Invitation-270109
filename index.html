@@ -383,6 +383,79 @@
   .bgm-btn.muted .icon-on { display: none; }
   .bgm-btn.muted .icon-off { display: block; }
 
+  /* ---- 참석의사 전달(RSVP) ---- */
+  .rsvp-overlay {
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(51,64,47,0.45);
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .rsvp-overlay.show { opacity: 1; visibility: visible; }
+  .rsvp-card {
+    width: 100%; max-width: 460px; max-height: 88vh; overflow-y: auto;
+    background: var(--paper); border-radius: 16px 16px 0 0;
+    padding: 1.6rem 1.5rem 1.5rem;
+    transform: translateY(24px);
+    transition: transform 0.3s ease;
+  }
+  .rsvp-overlay.show .rsvp-card { transform: translateY(0); }
+  .rsvp-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; }
+  .rsvp-head h3 { font-family: "Nanum Myeongjo", serif; font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+  .rsvp-close { background: none; border: none; font-size: 1.4rem; line-height: 1; color: var(--ink-soft); cursor: pointer; }
+  .rsvp-desc {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.82rem; color: var(--ink-soft);
+    line-height: 1.7; margin-bottom: 1rem;
+  }
+  .rsvp-info {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.8rem; color: var(--ink-soft);
+    border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line);
+    padding: 0.7rem 0; margin-bottom: 1.1rem;
+  }
+  .rsvp-info div { display: flex; gap: 0.7rem; padding: 0.25rem 0; }
+  .rsvp-info b { color: var(--ink); font-weight: 400; min-width: 3.4rem; }
+  .rsvp-tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
+  .rsvp-tab {
+    flex: 1; text-align: center; padding: 0.6rem 0;
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.88rem; color: var(--ink-soft);
+    background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;
+  }
+  .rsvp-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .rsvp-field { margin-bottom: 0.9rem; }
+  .rsvp-field label {
+    display: block; font-family: "Gowun Dodum", sans-serif; font-size: 0.78rem;
+    color: var(--ink-soft); margin-bottom: 0.4rem;
+  }
+  .rsvp-field input {
+    width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 0.8rem;
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem; color: var(--ink); background: #fff;
+  }
+  .rsvp-field input:focus { outline: none; border-color: var(--accent); }
+  details.rsvp-consent {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-bottom: 1rem;
+  }
+  details.rsvp-consent summary {
+    list-style: none; cursor: pointer; color: var(--ink);
+    display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0;
+  }
+  details.rsvp-consent summary::-webkit-details-marker { display: none; }
+  details.rsvp-consent summary .chev { color: var(--accent); transition: transform 0.2s; }
+  details.rsvp-consent[open] summary .chev { transform: rotate(180deg); }
+  .rsvp-consent .consent-body { padding: 0.4rem 0 0.2rem; line-height: 1.7; }
+  .rsvp-check { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; cursor: pointer; }
+  .rsvp-check input { width: 16px; height: 16px; accent-color: var(--accent); }
+  .rsvp-check span { font-family: "Gowun Dodum", sans-serif; font-size: 0.82rem; color: var(--ink-soft); }
+  .rsvp-submit {
+    width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 40px;
+    padding: 0.85rem 0; font-family: "Gowun Dodum", sans-serif; font-size: 0.92rem; cursor: pointer;
+  }
+  .rsvp-submit:disabled { background: var(--line); color: var(--ink-soft); cursor: not-allowed; }
+  .rsvp-foot { display: flex; justify-content: center; gap: 1.4rem; margin-top: 0.9rem; }
+  .rsvp-foot button {
+    background: none; border: none; font-family: "Gowun Dodum", sans-serif;
+    font-size: 0.76rem; color: var(--ink-soft); text-decoration: underline; cursor: pointer;
+  }
+
   /* 스크롤 등장 애니메이션 */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1s ease, transform 1s ease; }
   .reveal.in { opacity: 1; transform: none; }
@@ -627,6 +700,53 @@
 
 <div id="toast">복사되었습니다</div>
 
+<div id="rsvpOverlay" class="rsvp-overlay">
+  <div class="rsvp-card">
+    <div class="rsvp-head">
+      <h3>참석의사 전달</h3>
+      <button class="rsvp-close" id="rsvpClose" aria-label="닫기">&times;</button>
+    </div>
+    <p class="rsvp-desc">
+      축하의 마음으로 참석해 주실 모든 분을 정성껏 모시고자 하오니,<br/>
+      참석 여부를 알려주시면 감사하겠습니다.
+    </p>
+    <div class="rsvp-info">
+      <div><b>주인공</b><span>신랑 이주형 · 신부 임유리</span></div>
+      <div><b>예식일</b><span>2027년 1월 9일 토요일 오후 12시</span></div>
+      <div><b>장소</b><span>플렌티 컨벤션</span></div>
+    </div>
+    <div class="rsvp-tabs">
+      <button type="button" class="rsvp-tab active" data-side="신랑측">신랑측</button>
+      <button type="button" class="rsvp-tab" data-side="신부측">신부측</button>
+    </div>
+    <div class="rsvp-field">
+      <label for="rsvpName">성함</label>
+      <input type="text" id="rsvpName" placeholder="성함을 입력해주세요" />
+    </div>
+    <div class="rsvp-field">
+      <label for="rsvpCount">참석인원 (본인 포함)</label>
+      <input type="number" id="rsvpCount" min="1" inputmode="numeric" placeholder="숫자만 입력해주세요" />
+    </div>
+    <details class="rsvp-consent">
+      <summary>개인정보 수집 및 이용 동의 (필수) <span class="chev">⌄</span></summary>
+      <div class="consent-body">
+        수집 항목: 성함, 참석인원, 신랑측·신부측 구분<br/>
+        수집 목적: 예식 참석 인원 확인 및 좌석·식사 안내<br/>
+        보유 기간: 예식일로부터 1개월간 보관 후 파기
+      </div>
+    </details>
+    <label class="rsvp-check">
+      <input type="checkbox" id="rsvpConsent" />
+      <span>수집 및 이용에 동의합니다.</span>
+    </label>
+    <button class="rsvp-submit" id="rsvpSubmit" disabled>참석의사 전달</button>
+    <div class="rsvp-foot">
+      <button type="button" id="rsvpSkipToday">오늘 그만보기</button>
+      <button type="button" id="rsvpDismiss">닫기</button>
+    </div>
+  </div>
+</div>
+
 <div id="lightbox">
   <button class="lb-close" aria-label="닫기">&times;</button>
   <button class="lb-nav lb-prev" aria-label="이전 사진">&#10094;</button>
@@ -707,6 +827,7 @@
   document.getElementById('introBtn').addEventListener('click', ()=>{
     document.getElementById('introScreen').classList.add('hide');
     document.body.classList.remove('intro-lock');
+    document.dispatchEvent(new Event('invitationOpened'));
   });
 
   /* ---- 배경음악: 처음부터 재생(음소거 상태로 시작), 첫 터치 시 소리 켜짐 ---- */
@@ -777,6 +898,82 @@
     else if (e.key === 'ArrowLeft') showAt(lbIndex - 1);
     else if (e.key === 'ArrowRight') showAt(lbIndex + 1);
   });
+
+  /* ---- 참석의사 전달(RSVP): Google 시트로 저장 ---- */
+  // TODO: Google Apps Script 웹앱 배포 후 나온 URL로 아래 값을 교체하세요.
+  const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwgILMSJUI3-zAh_weJK-5oCMIbdifI3OP877RCFV340Mb4-aXKOaZGxgpPW_5af1Vf/exec';
+
+  (function(){
+    const overlay = document.getElementById('rsvpOverlay');
+    const card = overlay.querySelector('.rsvp-card');
+    const closeBtn = document.getElementById('rsvpClose');
+    const dismissBtn = document.getElementById('rsvpDismiss');
+    const skipTodayBtn = document.getElementById('rsvpSkipToday');
+    const tabs = overlay.querySelectorAll('.rsvp-tab');
+    const nameInput = document.getElementById('rsvpName');
+    const countInput = document.getElementById('rsvpCount');
+    const consentCheck = document.getElementById('rsvpConsent');
+    const submitBtn = document.getElementById('rsvpSubmit');
+    let side = '신랑측';
+
+    const todayKey = new Date().toISOString().slice(0, 10);
+
+    function shouldShow(){
+      if (localStorage.getItem('rsvpSubmitted') === 'true') return false;
+      if (localStorage.getItem('rsvpSkipUntil') === todayKey) return false;
+      return true;
+    }
+    function openRsvp(){
+      if (shouldShow()) overlay.classList.add('show');
+    }
+    function closeRsvp(){ overlay.classList.remove('show'); }
+
+    document.addEventListener('invitationOpened', ()=>{
+      setTimeout(openRsvp, 600);
+    });
+
+    closeBtn.addEventListener('click', closeRsvp);
+    dismissBtn.addEventListener('click', closeRsvp);
+    overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeRsvp(); });
+    skipTodayBtn.addEventListener('click', ()=>{
+      localStorage.setItem('rsvpSkipUntil', todayKey);
+      closeRsvp();
+    });
+
+    tabs.forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        tabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        side = tab.dataset.side;
+      });
+    });
+
+    consentCheck.addEventListener('change', ()=>{
+      submitBtn.disabled = !consentCheck.checked;
+    });
+
+    submitBtn.addEventListener('click', async ()=>{
+      const name = nameInput.value.trim();
+      const count = countInput.value.trim();
+      if (!name) { showToast('성함을 입력해주세요'); return; }
+      if (!count || Number(count) < 1) { showToast('참석인원을 입력해주세요'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '전달 중...';
+      try {
+        await fetch(RSVP_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ side, name, count })
+        });
+      } catch (e) {}
+      localStorage.setItem('rsvpSubmitted', 'true');
+      closeRsvp();
+      showToast('참석의사가 전달되었습니다');
+      submitBtn.textContent = '참석의사 전달';
+    });
+  })();
 
   /* ---- 스크롤 등장 ---- */
   const io = new IntersectionObserver((entries)=>{
