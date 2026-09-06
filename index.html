@@ -8,7 +8,7 @@
 <!-- ====== SNS 공유 미리보기 (배포 시 og:image, og:url 경로를 본인 것으로 수정) ====== -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="이주형 ❤️ 임유리 결혼합니다" />
-<meta property="og:description" content="2026년 1월 9일, 두 사람의 영원을 약속하는 자리에 초대합니다." />
+<meta property="og:description" content="2027년 1월 9일, 두 사람의 영원을 약속하는 자리에 초대합니다." />
 <meta property="og:image" content="./preview.jpg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,14 +17,14 @@
 
 <style>
   :root {
-    /* ====== 따뜻한 크림 / 베이지 팔레트 ====== */
-    --paper:      #F6F1E7;   /* 바탕 크림 */
-    --paper-deep: #EFE7D7;   /* 살짝 짙은 베이지 (섹션 구분) */
-    --ink:        #463F35;   /* 본문 글자 (따뜻한 다크브라운) */
-    --ink-soft:   #6E6354;   /* 보조 글자 */
-    --accent:     #B08968;   /* 포인트 (말린 장미빛 브라운) */
-    --line:       #D8CDB8;   /* 가는 구분선 */
-    --gold:       #C2A878;   /* 가는 골드 라인 */
+    /* ====== 그리너리 / 청록 팔레트 ====== */
+    --paper:      #F4F7F0;   /* 바탕 (연한 그린 화이트) */
+    --paper-deep: #E6EEDD;   /* 살짝 짙은 세이지 (섹션 구분) */
+    --ink:        #33402F;   /* 본문 글자 (짙은 포레스트 그린) */
+    --ink-soft:   #67785F;   /* 보조 글자 (세이지 그레이그린) */
+    --accent:     #2E7D6B;   /* 포인트 (청록) */
+    --line:       #D2DEC5;   /* 가는 구분선 */
+    --gold:       #6FA284;   /* 가는 라인/디바이더 (세이지 그린) */
 
     --fs-base: 16px;
   }
@@ -34,7 +34,7 @@
   html { font-size: var(--fs-base); -webkit-text-size-adjust: 100%; }
 
   body {
-    background: #d9d2c4;            /* 화면 양옆 여백 색 */
+    background: #cfd9c6;            /* 화면 양옆 여백 색 */
     color: var(--ink);
     font-family: "Gowun Batang", serif;
     line-height: 1.9;
@@ -84,7 +84,7 @@
   /* ============ 1. 표지 ============ */
   .cover {
     background:
-      radial-gradient(120% 80% at 50% 0%, #FBF7EE 0%, var(--paper) 55%, var(--paper-deep) 100%);
+      radial-gradient(120% 80% at 50% 0%, #FAFCF6 0%, var(--paper) 55%, var(--paper-deep) 100%);
     padding-top: 3.5rem; padding-bottom: 3.5rem;
     text-align: center;
   }
@@ -97,7 +97,7 @@
     width: 100%; aspect-ratio: 3 / 4;
     border-radius: 200px 200px 12px 12px;
     overflow: hidden;
-    background: linear-gradient(160deg, #e9dfcb, #d8c8ad);
+    background: linear-gradient(160deg, #dbe8d3, #a9c9ac);
     display: flex; align-items: center; justify-content: center;
     border: 1px solid var(--line);
     margin-bottom: 2.4rem;
@@ -154,16 +154,6 @@
   .family .parents b { color: var(--ink); font-weight: 400; }
   .family .rel { color: var(--accent); font-size: 0.82rem; }
   .family .child { font-family: "Nanum Myeongjo", serif; font-weight: 700; color: var(--ink); font-size: 1.1rem; }
-  .family .call-btn {
-    margin-top: 2.2rem;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: "Gowun Dodum", sans-serif; font-size: 0.85rem;
-    color: var(--accent); text-decoration: none;
-    border: 1px solid var(--gold); border-radius: 40px;
-    padding: 0.7rem 1.6rem; background: var(--paper);
-    transition: background 0.2s;
-  }
-  .family .call-btn:active { background: #f1e8d6; }
 
   /* ============ 4. 캘린더 ============ */
   .calendar { background: var(--paper); text-align: center; }
@@ -180,9 +170,9 @@
   table.cal th {
     font-size: 0.78rem; color: var(--ink-soft); padding: 0.5rem 0; font-weight: 400;
   }
-  table.cal th.sun, table.cal td.sun { color: #b06a5c; }
+  table.cal th.sun, table.cal td.sun { color: #b1633f; }
   table.cal td { font-size: 0.9rem; color: var(--ink); padding: 0.55rem 0; }
-  table.cal td.dim { color: #c9bda6; }
+  table.cal td.dim { color: #b9c7ac; }
   table.cal td .mark {
     display: inline-flex; align-items: center; justify-content: center;
     width: 2rem; height: 2rem; border-radius: 50%;
@@ -201,12 +191,47 @@
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
   }
   .grid .cell {
-    aspect-ratio: 1 / 1; background: linear-gradient(160deg, #e7ddc8, #d6c6aa);
+    aspect-ratio: 1 / 1; background: linear-gradient(160deg, #dde9d5, #b7cdb3);
     border-radius: 4px; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
     font-family: "Gowun Dodum", sans-serif; font-size: 0.7rem; color: var(--ink-soft);
   }
-  .grid .cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .grid .cell img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
+
+  /* 갤러리 라이트박스 */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(20, 24, 18, 0.92);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  #lightbox.show { opacity: 1; pointer-events: auto; }
+  #lightbox img {
+    max-width: 100%; max-height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    transform: scale(0.96);
+    transition: transform 0.25s ease;
+  }
+  #lightbox.show img { transform: scale(1); }
+  #lightbox .lb-close {
+    position: absolute; top: 1.2rem; right: 1.3rem;
+    width: 2.4rem; height: 2.4rem; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.4); background: transparent;
+    color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #lightbox .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25);
+    color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #lightbox .lb-prev { left: 1rem; }
+  #lightbox .lb-next { right: 1rem; }
 
   /* ============ 6. 오시는 길 ============ */
   .location { background: var(--paper); text-align: center; }
@@ -219,19 +244,17 @@
     color: var(--ink-soft); margin-bottom: 1.6rem;
   }
   .map-box {
-    width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden;
-    background: repeating-linear-gradient(45deg, #e9dfcb, #e9dfcb 12px, #e3d8c0 12px, #e3d8c0 24px);
-    display: flex; align-items: center; justify-content: center;
+    width: 100%; border-radius: 10px; overflow: hidden;
     border: 1px solid var(--line); margin-bottom: 1.4rem;
-    font-family: "Gowun Dodum", sans-serif; font-size: 0.82rem; color: var(--ink-soft);
   }
+  .map-box img { width: 100%; height: auto; display: block; }
   .map-links { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
   .map-links a {
     font-family: "Gowun Dodum", sans-serif; font-size: 0.82rem;
     text-decoration: none; color: var(--ink); background: var(--paper-deep);
     border: 1px solid var(--line); border-radius: 40px; padding: 0.6rem 1.2rem;
   }
-  .map-links a:active { background: #e6dcc8; }
+  .map-links a:active { background: #dbe7cd; }
   .transport {
     text-align: left; margin-top: 2.2rem; font-family: "Gowun Dodum", sans-serif;
     font-size: 0.85rem; color: var(--ink-soft); line-height: 2;
@@ -273,11 +296,28 @@
     border: 1px solid var(--gold); color: var(--accent); background: transparent;
     border-radius: 30px; padding: 0.35rem 0.8rem; cursor: pointer; white-space: nowrap;
   }
-  .copy-btn:active { background: #f1e8d6; }
+  .copy-btn:active { background: #e3ecd8; }
 
-  /* ============ 8. 마무리 / 공유 ============ */
+  /* ============ 8. 연락하기 ============ */
+  .contact { background: var(--paper); text-align: center; }
+  .contact-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.7rem 0;
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem; color: var(--ink-soft);
+  }
+  .contact-row .who b { color: var(--ink); font-weight: 400; font-size: 0.95rem; }
+  .contact-icons { display: flex; gap: 0.5rem; }
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.1rem; height: 2.1rem; border-radius: 50%;
+    border: 1px solid var(--line); color: var(--accent);
+  }
+  .icon-btn:active { background: #e3ecd8; }
+  .icon-btn svg { width: 1.05rem; height: 1.05rem; }
+
+  /* ============ 9. 마무리 / 공유 ============ */
   .outro {
-    background: radial-gradient(120% 80% at 50% 100%, #FBF7EE 0%, var(--paper) 60%);
+    background: radial-gradient(120% 80% at 50% 100%, #FAFCF6 0%, var(--paper) 60%);
     text-align: center; padding-bottom: 3rem;
   }
   .outro .thanks {
@@ -295,10 +335,23 @@
     padding: 0.8rem 1.8rem; cursor: pointer;
   }
   .share-btn:active { opacity: 0.85; }
-  .footer-note {
-    margin-top: 2.5rem; font-family: "Gowun Dodum", sans-serif;
-    font-size: 0.7rem; color: #b6ab97; letter-spacing: 0.1em;
+
+  /* 배경음악 토글 버튼 */
+  .bgm-btn {
+    position: fixed; top: 1rem;
+    right: max(1rem, calc(50vw - 230px + 1rem));
+    z-index: 60;
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--paper);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(70,63,53,0.15);
+    cursor: pointer;
   }
+  .bgm-btn svg { width: 1.25rem; height: 1.25rem; }
+  .bgm-btn .icon-off { display: none; }
+  .bgm-btn.muted .icon-on { display: none; }
+  .bgm-btn.muted .icon-off { display: block; }
 
   /* 스크롤 등장 애니메이션 */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1s ease, transform 1s ease; }
@@ -324,8 +377,7 @@
   <section class="cover">
     <div class="season">WEDDING INVITATION</div>
     <div class="cover-photo reveal">
-      <!-- 사진 넣을 때: <img src="./photo-cover.jpg" alt="" /> 로 교체 -->
-      <span class="ph">메인 사진을<br/>여기에 넣어주세요<br/>(세로 3:4 권장)</span>
+      <img src="./photos_temp/main.jpg" alt="이주형 & 임유리" />
     </div>
     <div class="names reveal">
       <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
@@ -337,16 +389,18 @@
   <!-- ============ 2. 인사말 ============ -->
   <!-- 모바일 청첩장용 인사말을 여기에 채워주세요. (종이 청첩장 문구와 다르게 작성 예정) -->
   <section class="greeting">
-    <div class="eyebrow reveal">초대합니다</div>
+    <div class="eyebrow reveal">인사말</div>
     <p class="invite serif-title reveal">소중한 분들을 초대합니다</p>
     <div class="divider reveal"><span>◇</span></div>
     <p class="poem reveal">
-      <!-- 인사말 본문을 여기에 작성하세요 -->
-      （인사말 문구가 들어갈 자리입니다）
+      이제 두 사람은 비를 맞지 않으리라.<br/>
+      서로가 서로에게 지붕이 되어 줄 테니까.
+      <span class="gap"></span>
+      이제 두 사람은 춥지 않으리라.<br/>
+      서로가 서로에게 따뜻함이 될 테니까.
     </p>
     <p class="closing reveal">
-      <!-- 마무리 문장을 여기에 작성하세요 -->
-      （마무리 문장이 들어갈 자리입니다）
+      - 아파치족 인디언들의 결혼 축시 中 -
     </p>
   </section>
 
@@ -363,7 +417,6 @@
       <span class="rel">딸</span>
       <span class="child">임유리</span>
     </div>
-    <a class="call-btn reveal" href="tel:010-0000-0000">☎ 연락하기</a>
   </section>
 
   <!-- ============ 4. 캘린더 ============ -->
@@ -386,41 +439,50 @@
   <section class="gallery">
     <div class="eyebrow reveal">우리의 순간들</div>
     <div class="grid reveal">
-      <div class="cell">사진 1</div>
-      <div class="cell">사진 2</div>
-      <div class="cell">사진 3</div>
-      <div class="cell">사진 4</div>
-      <div class="cell">사진 5</div>
-      <div class="cell">사진 6</div>
-      <div class="cell">사진 7</div>
-      <div class="cell">사진 8</div>
-      <div class="cell">사진 9</div>
+      <div class="cell"><img src="./photos_temp/001.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/002.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/003.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/004.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/005.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/006.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/007.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/008.jpg" alt="" /></div>
+      <div class="cell"><img src="./photos_temp/009.jpg" alt="" /></div>
     </div>
   </section>
 
   <!-- ============ 6. 오시는 길 ============ -->
   <section class="location">
     <div class="eyebrow reveal">오시는 길</div>
-    <p class="hall reveal">○○○ 웨딩홀</p>
-    <p class="addr reveal">서울특별시 ○○구 ○○로 00, ○층 ○○홀</p>
-    <div class="map-box reveal">지도를 넣어주세요 (네이버/카카오 지도 캡처 또는 임베드)</div>
+    <p class="hall reveal">플렌티 컨벤션</p>
+    <p class="addr reveal">서울특별시 서초구 반포대로 222<br/>가톨릭대학교 성의교정, 옴니버스파크 로비층(L)</p>
+    <div class="map-box reveal"><img src="./plenty-map.png" alt="플렌티 컨벤션 약도" /></div>
     <div class="map-links reveal">
-      <a href="#" onclick="return false;">네이버 지도</a>
-      <a href="#" onclick="return false;">카카오 지도</a>
-      <a href="#" onclick="return false;">티맵</a>
+      <a href="https://naver.me/FgHDoDqj" target="_blank" rel="noopener">네이버 지도</a>
+      <a href="https://place.map.kakao.com/1700658883" target="_blank" rel="noopener">카카오 지도</a>
     </div>
     <div class="transport reveal">
       <div class="blk">
         <h4>지하철</h4>
-        ○호선 ○○역 ○번 출구에서 도보 ○분
+        3·7·9호선 고속터미널역 4번 출구 → 도보 10분<br/>
+        (4번 출구 앞 횡단보도 건너서 서울성모병원 방향 직진)
       </div>
       <div class="blk">
         <h4>버스</h4>
-        ○○○ 정류장 하차 (간선 000, 000 / 지선 0000)
+        간선(파랑) 740, 405 서울지방조달청·서울성모병원 하차<br/>
+        간선(파랑) 540 서울성모병원 하차<br/>
+        지선(녹색) 서초13, 서초14, 서초21, 5413 서울지방조달청·서울성모병원 하차
+      </div>
+      <div class="blk">
+        <h4>자가용</h4>
+        내비게이션 "가톨릭대학교 옴니버스파크" 검색<br/>
+        서울특별시 서초구 반포대로 222 옴니버스파크
       </div>
       <div class="blk">
         <h4>주차</h4>
-        건물 내 주차장 ○시간 무료 (안내 데스크에서 확인)
+        옴니버스파크 건물 B4~B5층 주차장 이용 (주말 최대 200대)<br/>
+        만차 시 성모병원 별관 주차장 이용 (도보 1분)<br/>
+        하객 4시간 무료주차, 초과 15분당 1,000원
       </div>
     </div>
   </section>
@@ -467,7 +529,46 @@
     </details>
   </section>
 
-  <!-- ============ 8. 마무리 / 공유 ============ -->
+  <!-- ============ 8. 연락하기 ============ -->
+  <section class="contact">
+    <div class="eyebrow reveal">연락하기</div>
+
+    <details class="acc reveal">
+      <summary>신랑측 <span class="chev">⌄</span></summary>
+      <div class="acc-body">
+        <div class="contact-row">
+          <span class="who">신랑 <b>이주형</b></span>
+          <span class="contact-icons">
+            <a class="icon-btn" href="tel:010-5626-6335" aria-label="이주형에게 전화">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+            <a class="icon-btn" href="sms:010-5626-6335" aria-label="이주형에게 문자">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </a>
+          </span>
+        </div>
+      </div>
+    </details>
+
+    <details class="acc reveal">
+      <summary>신부측 <span class="chev">⌄</span></summary>
+      <div class="acc-body">
+        <div class="contact-row">
+          <span class="who">신부 <b>임유리</b></span>
+          <span class="contact-icons">
+            <a class="icon-btn" href="tel:010-9632-5166" aria-label="임유리에게 전화">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+            <a class="icon-btn" href="sms:010-9632-5166" aria-label="임유리에게 문자">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </a>
+          </span>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ 9. 마무리 / 공유 ============ -->
   <section class="outro">
     <div class="divider reveal"><span>◇</span></div>
     <p class="thanks reveal">
@@ -476,12 +577,24 @@
     </p>
     <p class="names-sm reveal">이주형 &amp; 임유리 올림</p>
     <button class="share-btn reveal" id="shareBtn">청첩장 공유하기</button>
-    <p class="footer-note reveal">2026. 01. ㅇㅇ</p>
   </section>
 
 </div>
 
+<audio id="bgm" src="./bgm/Married_Life.mp3" loop preload="auto" autoplay muted playsinline></audio>
+<button class="bgm-btn muted" id="bgmToggle" aria-label="배경음악 재생/정지">
+  <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+  <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+</button>
+
 <div id="toast">복사되었습니다</div>
+
+<div id="lightbox">
+  <button class="lb-close" aria-label="닫기">&times;</button>
+  <button class="lb-nav lb-prev" aria-label="이전 사진">&#10094;</button>
+  <img src="" alt="" />
+  <button class="lb-nav lb-next" aria-label="다음 사진">&#10095;</button>
+</div>
 
 <script>
   /* ====== 여기 세 값만 바꾸면 캘린더와 D-day가 자동으로 계산됩니다 ====== */
@@ -550,6 +663,75 @@
       try{ await navigator.clipboard.writeText(location.href); showToast('링크가 복사되었습니다'); }
       catch(e){ showToast('주소창의 링크를 복사해 주세요'); }
     }
+  });
+
+  /* ---- 배경음악: 처음부터 재생(음소거 상태로 시작), 첫 터치 시 소리 켜짐 ---- */
+  const bgm = document.getElementById('bgm');
+  const bgmBtn = document.getElementById('bgmToggle');
+
+  function reflectBgmState(){
+    if (bgm.muted || bgm.paused) bgmBtn.classList.add('muted');
+    else bgmBtn.classList.remove('muted');
+  }
+
+  bgm.play().catch(()=>{});
+  reflectBgmState();
+
+  // 대부분의 모바일 브라우저는 소리 있는 자동재생을 막기 때문에,
+  // 음소거 상태로 미리 재생해두고 첫 터치/클릭 시 자연스럽게 소리를 켠다.
+  function unmuteOnFirstInteraction(){
+    bgm.muted = false;
+    if (bgm.paused) bgm.play().catch(()=>{});
+    reflectBgmState();
+    document.removeEventListener('click', unmuteOnFirstInteraction);
+    document.removeEventListener('touchstart', unmuteOnFirstInteraction);
+  }
+  document.addEventListener('click', unmuteOnFirstInteraction);
+  document.addEventListener('touchstart', unmuteOnFirstInteraction);
+
+  bgmBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if (bgm.muted || bgm.paused) {
+      bgm.muted = false;
+      bgm.play().catch(()=>{});
+    } else {
+      bgm.muted = true;
+    }
+    reflectBgmState();
+  });
+
+  /* ---- 갤러리 라이트박스 ---- */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const galleryImgs = Array.from(document.querySelectorAll('.grid .cell img'));
+  let lbIndex = 0;
+
+  function showAt(index){
+    lbIndex = (index + galleryImgs.length) % galleryImgs.length;
+    const img = galleryImgs[lbIndex];
+    lightboxImg.src = img.src; lightboxImg.alt = img.alt || '';
+  }
+  function openLightbox(index){
+    showAt(index);
+    lightbox.classList.add('show');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('show');
+  }
+
+  galleryImgs.forEach((img, i)=>{
+    img.addEventListener('click', ()=> openLightbox(i));
+  });
+  lightbox.querySelector('.lb-prev').addEventListener('click', ()=> showAt(lbIndex - 1));
+  lightbox.querySelector('.lb-next').addEventListener('click', ()=> showAt(lbIndex + 1));
+  lightbox.addEventListener('click', (e)=>{
+    if (e.target === lightbox || e.target.classList.contains('lb-close')) closeLightbox();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if (!lightbox.classList.contains('show')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') showAt(lbIndex - 1);
+    else if (e.key === 'ArrowRight') showAt(lbIndex + 1);
   });
 
   /* ---- 스크롤 등장 ---- */
