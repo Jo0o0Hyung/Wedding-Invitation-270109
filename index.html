@@ -126,15 +126,13 @@
   }
   .cover-photo {
     position: relative;
-    width: 100%; aspect-ratio: 3 / 4;
-    border-radius: 200px 200px 12px 12px;
+    width: calc(100% + 3.6rem);
+    margin-left: -1.8rem;
+    margin-bottom: 2.4rem;
     overflow: hidden;
     background: linear-gradient(160deg, #dbe8d3, #a9c9ac);
-    display: flex; align-items: center; justify-content: center;
-    border: 1px solid var(--line);
-    margin-bottom: 2.4rem;
   }
-  .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover-photo img { width: 100%; height: auto; display: block; }
   .love-script {
     position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
     z-index: 2; pointer-events: none; white-space: nowrap;
@@ -154,10 +152,6 @@
   @media (prefers-reduced-motion: reduce) {
     .love-script { clip-path: inset(0 0 0 0); }
     .love-script.draw { animation: none; }
-  }
-  .cover-photo .ph {
-    font-family: "Gowun Dodum", sans-serif;
-    font-size: 0.8rem; color: var(--ink-soft); letter-spacing: 0.1em; text-align:center; padding: 1rem;
   }
   .cover .names {
     font-family: "Nanum Myeongjo", serif; font-weight: 800;
@@ -229,11 +223,21 @@
     width: 2rem; height: 2rem; border-radius: 50%;
     background: var(--accent); color: #fff; font-weight: 700;
   }
-  .countdown {
-    margin-top: 2.2rem; font-family: "Gowun Dodum", sans-serif;
-    font-size: 0.9rem; color: var(--ink-soft);
+  .countdown-timer {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.5rem; margin-top: 2.2rem;
   }
-  .countdown b { color: var(--accent); font-weight: 700; }
+  .ct-item { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; min-width: 2.6rem; }
+  .ct-num {
+    font-family: "Nanum Myeongjo", serif; font-weight: 800;
+    font-size: 1.5rem; color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .ct-label { font-family: "Gowun Dodum", sans-serif; font-size: 0.68rem; color: var(--ink-soft); }
+  .ct-sep { font-size: 1.2rem; color: var(--line); margin-bottom: 1.1rem; }
+  .countdown-caption {
+    margin-top: 0.8rem; font-family: "Gowun Dodum", sans-serif;
+    font-size: 0.85rem; color: var(--ink-soft);
+  }
 
   /* ============ 5. 갤러리 ============ */
   .gallery { background: var(--paper-deep); }
@@ -543,7 +547,7 @@
   <section class="family">
     <div class="eyebrow reveal">신랑 &amp; 신부</div>
     <div class="row reveal">
-      <span class="parents"><b>이춘우</b> · <b>(故)조종숙</b>의 아들</span>
+      <span class="parents"><b>이춘우</b> · <b>🌷조종숙</b>의 아들</span>
       <span class="child">이주형</span>
     </div>
     <div class="row reveal">
@@ -565,7 +569,16 @@
       </thead>
       <tbody id="cal-body"><!-- JS로 채움 --></tbody>
     </table>
-    <p class="countdown reveal">결혼식까지 <b id="dday">D-00</b> 남았습니다</p>
+    <div class="countdown-timer reveal">
+      <div class="ct-item"><span class="ct-num" id="ctDays">00</span><span class="ct-label">일</span></div>
+      <div class="ct-sep">:</div>
+      <div class="ct-item"><span class="ct-num" id="ctHours">00</span><span class="ct-label">시간</span></div>
+      <div class="ct-sep">:</div>
+      <div class="ct-item"><span class="ct-num" id="ctMinutes">00</span><span class="ct-label">분</span></div>
+      <div class="ct-sep">:</div>
+      <div class="ct-item"><span class="ct-num" id="ctSeconds">00</span><span class="ct-label">초</span></div>
+    </div>
+    <p class="countdown-caption reveal">결혼식까지 남은 시간</p>
   </section>
 
   <!-- ============ 5. 갤러리 ============ -->
@@ -633,7 +646,7 @@
       <summary>신랑측 <span class="chev">⌄</span></summary>
       <div class="acc-body">
         <div class="acc-row">
-          <span class="who"><b>김주형</b></span>
+          <span class="who"><b>이주형</b></span>
           <span class="num">○○은행 000-0000-0000</span>
           <button class="copy-btn" data-copy="○○은행 000-0000-0000">복사</button>
         </div>
@@ -649,7 +662,7 @@
       <summary>신부측 <span class="chev">⌄</span></summary>
       <div class="acc-body">
         <div class="acc-row">
-          <span class="who"><b>이유리</b></span>
+          <span class="who"><b>임유리</b></span>
           <span class="num">○○은행 000-0000-0000</span>
           <button class="copy-btn" data-copy="○○은행 000-0000-0000">복사</button>
         </div>
@@ -777,10 +790,12 @@
 </div>
 
 <script>
-  /* ====== 여기 세 값만 바꾸면 캘린더와 D-day가 자동으로 계산됩니다 ====== */
-  const WEDDING_YEAR  = 2027;
-  const WEDDING_MONTH = 1;    // 1월
-  const WEDDING_DAY   = 9;    // 9일 (토요일)
+  /* ====== 여기 값만 바꾸면 캘린더와 카운트다운이 자동으로 계산됩니다 ====== */
+  const WEDDING_YEAR   = 2027;
+  const WEDDING_MONTH  = 1;    // 1월
+  const WEDDING_DAY    = 9;    // 9일 (토요일)
+  const WEDDING_HOUR   = 12;   // 오후 12시
+  const WEDDING_MINUTE = 0;
 
   /* ---- 캘린더 그리기 ---- */
   (function buildCalendar(){
@@ -805,15 +820,33 @@
     body.innerHTML = html;
   })();
 
-  /* ---- D-day ---- */
-  (function dday(){
-    const today = new Date(); today.setHours(0,0,0,0);
-    const wed = new Date(WEDDING_YEAR, WEDDING_MONTH - 1, WEDDING_DAY);
-    const diff = Math.ceil((wed - today) / (1000*60*60*24));
-    const el = document.getElementById('dday');
-    if (diff > 0)      el.textContent = 'D-' + diff;
-    else if (diff===0) el.textContent = 'D-DAY';
-    else               el.textContent = '결혼식이 끝났습니다';
+  /* ---- 카운트다운 타이머 (일/시간/분/초) ---- */
+  (function countdownTimer(){
+    const wed = new Date(WEDDING_YEAR, WEDDING_MONTH - 1, WEDDING_DAY, WEDDING_HOUR, WEDDING_MINUTE, 0);
+    const els = {
+      d: document.getElementById('ctDays'),
+      h: document.getElementById('ctHours'),
+      m: document.getElementById('ctMinutes'),
+      s: document.getElementById('ctSeconds')
+    };
+    const pad = n => String(n).padStart(2, '0');
+    let timer;
+    function tick(){
+      const diff = wed - new Date();
+      if (diff <= 0) {
+        els.d.textContent = '00'; els.h.textContent = '00';
+        els.m.textContent = '00'; els.s.textContent = '00';
+        clearInterval(timer);
+        return;
+      }
+      const totalSec = Math.floor(diff / 1000);
+      els.d.textContent = pad(Math.floor(totalSec / 86400));
+      els.h.textContent = pad(Math.floor((totalSec % 86400) / 3600));
+      els.m.textContent = pad(Math.floor((totalSec % 3600) / 60));
+      els.s.textContent = pad(totalSec % 60);
+    }
+    tick();
+    timer = setInterval(tick, 1000);
   })();
 
   /* ---- 계좌 복사 ---- */
