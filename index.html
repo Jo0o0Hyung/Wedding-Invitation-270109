@@ -54,36 +54,86 @@
 
   section { padding: 4.5rem 1.8rem; position: relative; }
 
-  /* ---- 시작 화면 (탭하면 청첩장 열림 + 음악 시작) ---- */
+  /* ---- 시작 화면: 닫힌 편지 + 왁스씰을 누르면 열리며 음악 시작 ---- */
   body.intro-lock { overflow: hidden; height: 100vh; }
   .intro {
     position: fixed; inset: 0; z-index: 200;
     background: radial-gradient(120% 80% at 50% 0%, #FAFCF6 0%, var(--paper) 55%, var(--paper-deep) 100%);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 1.1rem; text-align: center; cursor: pointer;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    gap: 1.6rem; text-align: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
   }
   .intro.hide { opacity: 0; visibility: hidden; pointer-events: none; }
   .intro-eyebrow {
     font-family: "Gowun Dodum", sans-serif; font-size: 0.75rem;
     letter-spacing: 0.45em; color: var(--accent); padding-left: 0.45em;
   }
-  .intro-names {
+
+  /* 편지 봉투 */
+  .envelope {
+    position: relative; width: 250px; height: 176px;
+    perspective: 1200px;
+  }
+  .env-pocket {
+    position: absolute; inset: 0; z-index: 1;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+    box-shadow: 0 14px 30px rgba(70,63,53,0.16);
+    overflow: hidden;
+  }
+  .env-pocket::before, .env-pocket::after {
+    content: ""; position: absolute; bottom: -10px; width: 60%; height: 100%;
+    background: var(--paper-deep); border: 1px solid var(--line);
+  }
+  .env-pocket::before { left: -14%; transform: rotate(24deg); transform-origin: bottom right; }
+  .env-pocket::after { right: -14%; transform: rotate(-24deg); transform-origin: bottom left; }
+  .env-letter {
+    position: absolute; z-index: 2; left: 8%; right: 8%; bottom: 6%;
+    height: 82%;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(70,63,53,0.12);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem;
+    transform: translateY(6%);
+    transition: transform 0.7s ease 0.35s;
+  }
+  .env-letter .names {
     font-family: "Nanum Myeongjo", serif; font-weight: 800;
-    font-size: 1.6rem; color: var(--ink); letter-spacing: 0.06em;
-    display: flex; align-items: center; gap: 0.9rem;
+    font-size: 1.05rem; color: var(--ink); letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 0.5rem;
   }
-  .intro-names .amp { color: var(--accent); font-size: 1.2rem; font-weight: 400; }
-  .intro-date {
-    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem;
-    color: var(--ink-soft); letter-spacing: 0.08em; margin-bottom: 0.6rem;
+  .env-letter .names .amp { color: var(--accent); font-weight: 400; }
+  .env-letter .date {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.72rem;
+    color: var(--ink-soft); letter-spacing: 0.06em;
   }
-  .intro-btn {
-    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem; color: #fff;
-    background: var(--accent); border: none; border-radius: 40px;
-    padding: 0.9rem 2.2rem; cursor: pointer; letter-spacing: 0.05em;
+  .env-flap {
+    position: absolute; top: 0; left: 0; width: 100%; height: 58%; z-index: 3;
+    background: var(--paper-deep); border: 1px solid var(--line);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 0.7s ease;
   }
-  .intro-btn:active { opacity: 0.85; }
+  .wax-seal {
+    position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 4;
+    width: 54px; height: 54px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #3f9482, var(--accent) 60%, #235c4f 100%);
+    border: none; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Nanum Myeongjo", serif; font-size: 1.1rem;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .wax-seal:active { transform: translate(-50%, -50%) scale(0.94); }
+
+  .envelope.opened .env-flap { transform: rotateX(-165deg); }
+  .envelope.opened .wax-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(25deg); pointer-events: none; }
+  .envelope.opened .env-letter { transform: translateY(-58%) scale(1.04); }
+
+  .intro-hint {
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.8rem;
+    color: var(--ink-soft); letter-spacing: 0.05em;
+  }
 
   /* ---- 공통 타이포 ---- */
   .eyebrow {
@@ -404,11 +454,16 @@
 
 <div id="introScreen" class="intro">
   <div class="intro-eyebrow">WEDDING INVITATION</div>
-  <div class="intro-names">
-    <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
+  <div class="envelope" id="envelope">
+    <div class="env-pocket"></div>
+    <div class="env-letter">
+      <div class="names"><span>이주형</span><span class="amp">&amp;</span><span>임유리</span></div>
+      <div class="date">2027. 01. 09.</div>
+    </div>
+    <div class="env-flap"></div>
+    <button id="introBtn" class="wax-seal" aria-label="봉인을 눌러 청첩장 열기">&amp;</button>
   </div>
-  <div class="intro-date">2027. 01. 09.</div>
-  <button id="introBtn" class="intro-btn">청첩장 열기</button>
+  <div class="intro-hint">봉인을 눌러 청첩장을 열어보세요</div>
 </div>
 
 <div class="frame">
@@ -703,11 +758,22 @@
     }
   });
 
-  /* ---- 시작 화면: 탭하면 청첩장이 열리고 동시에 배경음악 소리가 켜짐 ---- */
-  document.getElementById('introBtn').addEventListener('click', ()=>{
-    document.getElementById('introScreen').classList.add('hide');
-    document.body.classList.remove('intro-lock');
-  });
+  /* ---- 시작 화면: 왁스씰을 누르면 편지가 열리고, 잠시 후 본 화면으로 전환 ---- */
+  (function(){
+    const envelope = document.getElementById('envelope');
+    const introScreen = document.getElementById('introScreen');
+    const introBtn = document.getElementById('introBtn');
+    let opened = false;
+    introBtn.addEventListener('click', ()=>{
+      if (opened) return;
+      opened = true;
+      envelope.classList.add('opened');
+      setTimeout(()=>{
+        introScreen.classList.add('hide');
+        document.body.classList.remove('intro-lock');
+      }, 1100);
+    });
+  })();
 
   /* ---- 배경음악: 처음부터 재생(음소거 상태로 시작), 첫 터치 시 소리 켜짐 ---- */
   const bgm = document.getElementById('bgm');
