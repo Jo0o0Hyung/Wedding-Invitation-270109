@@ -830,7 +830,6 @@
     </label>
     <button class="rsvp-submit" id="rsvpSubmit" disabled>참석의사 전달</button>
     <div class="rsvp-foot">
-      <button type="button" id="rsvpSkipToday">오늘 그만보기</button>
       <button type="button" id="rsvpDismiss">닫기</button>
     </div>
   </div>
@@ -1090,7 +1089,6 @@
     const card = overlay.querySelector('.rsvp-card');
     const closeBtn = document.getElementById('rsvpClose');
     const dismissBtn = document.getElementById('rsvpDismiss');
-    const skipTodayBtn = document.getElementById('rsvpSkipToday');
     const tabs = overlay.querySelectorAll('.rsvp-tab');
     const nameInput = document.getElementById('rsvpName');
     const countInput = document.getElementById('rsvpCount');
@@ -1098,25 +1096,20 @@
     const submitBtn = document.getElementById('rsvpSubmit');
     let side = '신랑측';
 
-    const todayKey = new Date().toISOString().slice(0, 10);
-
     // 카카오톡 인앱 브라우저 등 일부 환경은 localStorage 접근이 막혀 있어
     // 예외가 나도 RSVP 기능 자체가 멈추지 않도록 안전하게 감싼다.
     function safeGet(key){ try { return localStorage.getItem(key); } catch (e) { return null; } }
     function safeSet(key, val){ try { localStorage.setItem(key, val); } catch (e) {} }
     function safeRemove(key){ try { localStorage.removeItem(key); } catch (e) {} }
 
-    // 테스트용: 링크 끝에 ?resetrsvp=1 을 붙여서 열면 "이미 제출함/오늘 그만보기" 기록을 지워
+    // 테스트용: 링크 끝에 ?resetrsvp=1 을 붙여서 열면 "이미 제출함" 기록을 지워
     // 개발자도구 없이도(카카오톡 인앱 등) 팝업을 다시 띄워볼 수 있다.
     if (location.search.indexOf('resetrsvp') !== -1) {
       safeRemove('rsvpSubmitted');
-      safeRemove('rsvpSkipUntil');
     }
 
     function shouldShow(){
-      if (safeGet('rsvpSubmitted') === 'true') return false;
-      if (safeGet('rsvpSkipUntil') === todayKey) return false;
-      return true;
+      return safeGet('rsvpSubmitted') !== 'true';
     }
     function openRsvp(){
       if (shouldShow()) overlay.classList.add('show');
@@ -1130,10 +1123,6 @@
     closeBtn.addEventListener('click', closeRsvp);
     dismissBtn.addEventListener('click', closeRsvp);
     overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeRsvp(); });
-    skipTodayBtn.addEventListener('click', ()=>{
-      safeSet('rsvpSkipUntil', todayKey);
-      closeRsvp();
-    });
 
     tabs.forEach(tab=>{
       tab.addEventListener('click', ()=>{
