@@ -118,24 +118,29 @@
   }
   .cover-photo img { width: 100%; height: auto; display: block; }
   .love-script {
-    position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
+    position: absolute; top: 8%; left: 50%;
+    transform: translateX(-50%) translateZ(0);
+    -webkit-transform: translateX(-50%) translateZ(0);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    will-change: clip-path, opacity;
     z-index: 2; pointer-events: none; white-space: nowrap;
     font-family: "Mrs Saint Delafield", cursive;
     font-size: 3.4rem; line-height: 1; color: rgba(0,0,0,0.88);
     text-shadow: 0 1px 8px rgba(255,255,255,0.35);
     clip-path: inset(0 100% 0 0);
+    -webkit-clip-path: inset(0 100% 0 0);
   }
   .love-script.draw { animation: love-draw-loop 4.5s ease-in-out infinite; }
   @keyframes love-draw-loop {
-    0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
-    3%   { clip-path: inset(0 100% 0 0); opacity: 1; }
-    38%  { clip-path: inset(0 0 0 0);    opacity: 1; }
-    78%  { clip-path: inset(0 0 0 0);    opacity: 1; }
-    88%  { clip-path: inset(0 0 0 0);    opacity: 0; }
-    100% { clip-path: inset(0 100% 0 0); opacity: 0; }
+    0%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 0; }
+    3%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 1; }
+    38%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0);    opacity: 1; }
+    78%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0);    opacity: 1; }
+    88%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0);    opacity: 0; }
+    100% { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .love-script { clip-path: inset(0 0 0 0); }
+    .love-script { clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); }
     .love-script.draw { animation: none; }
   }
   .cover .names {
