@@ -117,31 +117,29 @@
     background: linear-gradient(160deg, #dbe8d3, #a9c9ac);
   }
   .cover-photo img { width: 100%; height: auto; display: block; }
+  .love-script-mask {
+    position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
+    z-index: 2; pointer-events: none;
+    overflow: hidden; width: 0; opacity: 0;
+  }
+  .love-script-mask.draw { animation: love-reveal-loop 4.5s ease-in-out infinite; }
   .love-script {
-    position: absolute; top: 8%; left: 50%;
-    transform: translateX(-50%) translateZ(0);
-    -webkit-transform: translateX(-50%) translateZ(0);
-    -webkit-backface-visibility: hidden; backface-visibility: hidden;
-    will-change: clip-path, opacity;
-    z-index: 2; pointer-events: none; white-space: nowrap;
+    display: inline-block; white-space: nowrap;
     font-family: "Mrs Saint Delafield", cursive;
     font-size: 3.4rem; line-height: 1; color: rgba(0,0,0,0.88);
     text-shadow: 0 1px 8px rgba(255,255,255,0.35);
-    clip-path: inset(0 100% 0 0);
-    -webkit-clip-path: inset(0 100% 0 0);
   }
-  .love-script.draw { animation: love-draw-loop 4.5s ease-in-out infinite; }
-  @keyframes love-draw-loop {
-    0%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 0; }
-    3%   { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 1; }
-    38%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0);    opacity: 1; }
-    78%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0);    opacity: 1; }
-    88%  { clip-path: inset(0 0 0 0);    -webkit-clip-path: inset(0 0 0 0);    opacity: 0; }
-    100% { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 0; }
+  @keyframes love-reveal-loop {
+    0%   { width: 0;     opacity: 0; }
+    3%   { width: 0;     opacity: 1; }
+    38%  { width: 12rem; opacity: 1; }
+    78%  { width: 12rem; opacity: 1; }
+    88%  { width: 12rem; opacity: 0; }
+    100% { width: 0;     opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .love-script { clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); }
-    .love-script.draw { animation: none; }
+    .love-script-mask { width: 12rem; opacity: 1; }
+    .love-script-mask.draw { animation: none; }
   }
   .cover .names {
     font-family: "Gowun Dodum", sans-serif; font-weight: 400;
@@ -543,7 +541,7 @@
     <div class="season">WEDDING INVITATION</div>
     <div class="cover-photo reveal">
       <img src="./photos_temp/main.jpg" alt="이주형 & 임유리" />
-      <div class="love-script">Love</div>
+      <div class="love-script-mask" id="loveScriptMask"><div class="love-script">Love</div></div>
     </div>
     <div class="names reveal">
       <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
@@ -845,7 +843,7 @@
   <button class="lb-nav lb-next" aria-label="다음 사진">&#10095;</button>
 </div>
 
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js" defer></script>
 <script>
   /* ====== 여기 값만 바꾸면 캘린더와 카운트다운이 자동으로 계산됩니다 ====== */
   const WEDDING_YEAR   = 2027;
@@ -938,9 +936,6 @@
     const shareCopy = document.getElementById('shareCopy');
 
     const kakaoReady = KAKAO_JS_KEY.indexOf('여기에') === -1;
-    if (kakaoReady && typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
-      Kakao.init(KAKAO_JS_KEY);
-    }
 
     function openShare(){ shareOverlay.classList.add('show'); }
     function closeShare(){ shareOverlay.classList.remove('show'); }
@@ -971,10 +966,11 @@
     shareOverlay.addEventListener('click', (e)=>{ if (e.target === shareOverlay) closeShare(); });
 
     shareKakao.addEventListener('click', ()=>{
-      if (!kakaoReady || typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
+      if (!kakaoReady || typeof Kakao === 'undefined') {
         showToast('카카오톡 공유 설정이 필요합니다');
         return;
       }
+      if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
       Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
@@ -1006,7 +1002,7 @@
   /* ---- 웰컴 게이트 없이 바로 시작: Love 모션 + RSVP 타이머 트리거 ---- */
   setTimeout(()=>{
     document.dispatchEvent(new Event('invitationOpened'));
-    document.querySelector('.love-script').classList.add('draw');
+    document.getElementById('loveScriptMask').classList.add('draw');
   }, 300);
 
   /* ---- 배경음악 준비 안내 배너: 잠깐 떴다가 사라짐 ---- */
@@ -1104,9 +1100,14 @@
 
     const todayKey = new Date().toISOString().slice(0, 10);
 
+    // 카카오톡 인앱 브라우저 등 일부 환경은 localStorage 접근이 막혀 있어
+    // 예외가 나도 RSVP 기능 자체가 멈추지 않도록 안전하게 감싼다.
+    function safeGet(key){ try { return localStorage.getItem(key); } catch (e) { return null; } }
+    function safeSet(key, val){ try { localStorage.setItem(key, val); } catch (e) {} }
+
     function shouldShow(){
-      if (localStorage.getItem('rsvpSubmitted') === 'true') return false;
-      if (localStorage.getItem('rsvpSkipUntil') === todayKey) return false;
+      if (safeGet('rsvpSubmitted') === 'true') return false;
+      if (safeGet('rsvpSkipUntil') === todayKey) return false;
       return true;
     }
     function openRsvp(){
@@ -1122,7 +1123,7 @@
     dismissBtn.addEventListener('click', closeRsvp);
     overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeRsvp(); });
     skipTodayBtn.addEventListener('click', ()=>{
-      localStorage.setItem('rsvpSkipUntil', todayKey);
+      safeSet('rsvpSkipUntil', todayKey);
       closeRsvp();
     });
 
@@ -1154,7 +1155,7 @@
           body: JSON.stringify({ side, name, count })
         });
       } catch (e) {}
-      localStorage.setItem('rsvpSubmitted', 'true');
+      safeSet('rsvpSubmitted', 'true');
       closeRsvp();
       showToast('참석의사가 전달되었습니다');
       submitBtn.textContent = '참석의사 전달';
