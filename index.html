@@ -13,7 +13,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.css" />
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gowun+Batang:wght@400;700&family=Crimson+Pro:wght@300&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -60,7 +61,7 @@
     transform: translateX(-50%) translateY(-8px);
     z-index: 190;
     background: rgba(255,255,255,0.92); color: var(--ink-soft);
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.78rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.78rem;
     padding: 0.55rem 1.1rem; border-radius: 30px; white-space: nowrap;
     box-shadow: 0 4px 14px rgba(70,63,53,0.14);
     opacity: 0; pointer-events: none;
@@ -70,7 +71,7 @@
 
   /* ---- 공통 타이포 ---- */
   .eyebrow {
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", sans-serif;
     font-size: 0.72rem;
     letter-spacing: 0.5em;
     color: var(--accent);
@@ -80,8 +81,8 @@
     padding-left: 0.5em;
   }
   .serif-title {
-    font-family: "Gaegu", cursive;
-    font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif;
+    font-weight: 400;
   }
   .center { text-align: center; }
 
@@ -103,7 +104,7 @@
     text-align: center;
   }
   .cover .season {
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", sans-serif;
     font-size: 0.75rem; letter-spacing: 0.45em; color: var(--accent);
     padding-left: 0.45em; margin-bottom: 2.2rem;
   }
@@ -137,18 +138,21 @@
     .love-script.draw { animation: none; }
   }
   .cover .names {
-    font-family: "Gaegu", cursive; font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
     font-size: 1.9rem; color: var(--ink); letter-spacing: 0.06em;
     display: flex; align-items: center; justify-content: center; gap: 1rem;
   }
-  .cover .names .amp { color: var(--accent); font-size: 1.3rem; font-weight: 400; }
+  .cover .names .amp {
+    font-family: "Crimson Pro", serif; font-weight: 300; font-style: italic;
+    color: var(--accent); font-size: 1.5rem;
+  }
   .cover .date-line {
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", sans-serif;
     margin-top: 1.5rem; font-size: 0.95rem; color: var(--ink-soft);
     letter-spacing: 0.08em;
   }
   .cover .place-line {
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", sans-serif;
     margin-top: 0.3rem; font-size: 0.82rem; color: var(--ink-soft);
     letter-spacing: 0.06em;
   }
@@ -156,7 +160,7 @@
   /* ============ 2. 인사말 ============ */
   .greeting { background: var(--paper); text-align: center; }
   .greeting .invite {
-    font-family: "Gaegu", cursive; font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
     font-size: 1.35rem; color: var(--ink); margin-bottom: 0.6rem;
     letter-spacing: 0.05em;
   }
@@ -177,11 +181,11 @@
     gap: 0.55rem; font-size: 1.02rem; padding: 0.55rem 0; flex-wrap: wrap;
   }
   .family .parents {
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", sans-serif;
     font-size: 0.92rem; color: var(--ink-soft);
   }
   .family .parents b { color: var(--ink); font-weight: 400; }
-  .family .child { font-family: "Gaegu", cursive; font-weight: 700; color: var(--ink); font-size: 1.1rem; }
+  .family .child { font-family: "Gowun Dodum", sans-serif; font-weight: 400; color: var(--ink); font-size: 1.1rem; }
   .rip-flower {
     height: 1em; width: 1em; object-fit: contain;
     vertical-align: -0.15em; margin-right: 0.12em;
@@ -191,14 +195,14 @@
   /* ============ 4. 캘린더 ============ */
   .calendar { background: var(--paper); text-align: center; }
   .cal-headline {
-    font-family: "Gaegu", cursive; font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
     font-size: 1.2rem; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: 0.04em;
   }
-  .cal-sub { font-family: "Noto Sans KR", sans-serif; font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 2rem; }
+  .cal-sub { font-family: "Pretendard", sans-serif; font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 2rem; }
   table.cal {
     width: 100%; max-width: 320px; margin: 0 auto;
     border-collapse: collapse; table-layout: fixed;
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", sans-serif;
   }
   table.cal th {
     font-size: 0.78rem; color: var(--ink-soft); padding: 0.5rem 0; font-weight: 400;
@@ -217,13 +221,13 @@
   }
   .ct-item { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; min-width: 2.6rem; }
   .ct-num {
-    font-family: "Gaegu", cursive; font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
     font-size: 1.5rem; color: var(--accent); font-variant-numeric: tabular-nums;
   }
-  .ct-label { font-family: "Noto Sans KR", sans-serif; font-size: 0.68rem; color: var(--ink-soft); }
+  .ct-label { font-family: "Pretendard", sans-serif; font-size: 0.68rem; color: var(--ink-soft); }
   .ct-sep { font-size: 1.2rem; color: var(--line); margin-bottom: 1.1rem; }
   .countdown-caption {
-    margin-top: 0.8rem; font-family: "Noto Sans KR", sans-serif;
+    margin-top: 0.8rem; font-family: "Pretendard", sans-serif;
     font-size: 0.85rem; color: var(--ink-soft);
   }
 
@@ -237,7 +241,7 @@
     aspect-ratio: 1 / 1; background: linear-gradient(160deg, #dde9d5, #b7cdb3);
     border-radius: 4px; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.7rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.7rem; color: var(--ink-soft);
   }
   .grid .cell img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
 
@@ -279,11 +283,11 @@
   /* ============ 6. 오시는 길 ============ */
   .location { background: var(--paper); text-align: center; }
   .location .hall {
-    font-family: "Gaegu", cursive; font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
     font-size: 1.25rem; color: var(--ink); margin-bottom: 0.4rem;
   }
   .location .addr {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.9rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.9rem;
     color: var(--ink-soft); margin-bottom: 1.6rem;
   }
   .map-box {
@@ -293,17 +297,17 @@
   .map-box img { width: 100%; height: auto; display: block; }
   .map-links { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
   .map-links a {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.82rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.82rem;
     text-decoration: none; color: var(--ink); background: var(--paper-deep);
     border: 1px solid var(--line); border-radius: 40px; padding: 0.6rem 1.2rem;
   }
   .map-links a:active { background: #dbe7cd; }
   .transport {
-    text-align: left; margin-top: 2.2rem; font-family: "Noto Sans KR", sans-serif;
+    text-align: left; margin-top: 2.2rem; font-family: "Pretendard", sans-serif;
     font-size: 0.85rem; color: var(--ink-soft); line-height: 2;
   }
   .transport h4 {
-    font-family: "Gaegu", cursive; font-size: 0.9rem; color: var(--accent);
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.9rem; color: var(--accent);
     margin-bottom: 0.3rem; font-weight: 700; letter-spacing: 0.05em;
   }
   .transport .blk { margin-bottom: 1.1rem; }
@@ -311,7 +315,7 @@
   /* ============ 7. 마음 전하실 곳 ============ */
   .account { background: var(--paper-deep); text-align: center; }
   .account > p.lead {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.88rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.88rem;
     color: var(--ink-soft); margin-bottom: 2rem; line-height: 1.9;
   }
   details.acc {
@@ -320,7 +324,7 @@
   }
   details.acc summary {
     list-style: none; cursor: pointer; padding: 1rem 1.3rem;
-    font-family: "Gaegu", cursive; font-size: 0.98rem; color: var(--ink);
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.98rem; color: var(--ink);
     display: flex; justify-content: space-between; align-items: center;
   }
   details.acc summary::-webkit-details-marker { display: none; }
@@ -330,12 +334,12 @@
   .acc-row {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.7rem 0; border-top: 1px dashed var(--line);
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.85rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem; color: var(--ink-soft);
   }
   .acc-row .who b { color: var(--ink); font-weight: 400; font-size: 0.9rem; }
   .acc-row .num { color: var(--ink); }
   .copy-btn {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.72rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.72rem;
     border: 1px solid var(--gold); color: var(--accent); background: transparent;
     border-radius: 30px; padding: 0.35rem 0.8rem; cursor: pointer; white-space: nowrap;
   }
@@ -346,7 +350,7 @@
   .contact-row {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.7rem 0;
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.9rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.9rem; color: var(--ink-soft);
   }
   .contact-row .who b { color: var(--ink); font-weight: 400; font-size: 0.95rem; }
   .contact-icons { display: flex; gap: 0.5rem; }
@@ -364,16 +368,16 @@
     text-align: center; padding-bottom: 3rem;
   }
   .outro .thanks {
-    font-family: "Gaegu", cursive; font-weight: 700;
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
     font-size: 1.15rem; color: var(--ink); line-height: 2; margin-bottom: 2rem;
   }
   .outro .names-sm {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.9rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.9rem; color: var(--ink-soft);
     letter-spacing: 0.1em; margin-bottom: 2.5rem;
   }
   .share-btn {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.85rem; color: #fff;
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem; color: #fff;
     background: var(--accent); border: none; border-radius: 40px;
     padding: 0.8rem 1.8rem; cursor: pointer;
   }
@@ -397,13 +401,13 @@
   }
   .share-overlay.show .share-card { transform: translateY(0); }
   .share-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-  .share-head h3 { font-family: "Gaegu", cursive; font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+  .share-head h3 { font-family: "Gowun Dodum", sans-serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); }
   .share-close { background: none; border: none; font-size: 1.4rem; line-height: 1; color: var(--ink-soft); cursor: pointer; }
   .share-options { display: flex; justify-content: space-around; gap: 0.5rem; }
   .share-opt {
     background: none; border: none; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; gap: 0.55rem;
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.78rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.78rem; color: var(--ink-soft);
   }
   .share-opt .share-icon {
     width: 52px; height: 52px; border-radius: 50%;
@@ -450,14 +454,14 @@
   }
   .rsvp-overlay.show .rsvp-card { transform: translateY(0); }
   .rsvp-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; }
-  .rsvp-head h3 { font-family: "Gaegu", cursive; font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+  .rsvp-head h3 { font-family: "Gowun Dodum", sans-serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); }
   .rsvp-close { background: none; border: none; font-size: 1.4rem; line-height: 1; color: var(--ink-soft); cursor: pointer; }
   .rsvp-desc {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.82rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.82rem; color: var(--ink-soft);
     line-height: 1.7; margin-bottom: 1rem;
   }
   .rsvp-info {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.8rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.8rem; color: var(--ink-soft);
     border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line);
     padding: 0.7rem 0; margin-bottom: 1.1rem;
   }
@@ -466,22 +470,22 @@
   .rsvp-tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
   .rsvp-tab {
     flex: 1; text-align: center; padding: 0.6rem 0;
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.88rem; color: var(--ink-soft);
+    font-family: "Pretendard", sans-serif; font-size: 0.88rem; color: var(--ink-soft);
     background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;
   }
   .rsvp-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
   .rsvp-field { margin-bottom: 0.9rem; }
   .rsvp-field label {
-    display: block; font-family: "Noto Sans KR", sans-serif; font-size: 0.78rem;
+    display: block; font-family: "Pretendard", sans-serif; font-size: 0.78rem;
     color: var(--ink-soft); margin-bottom: 0.4rem;
   }
   .rsvp-field input {
     width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 0.8rem;
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.9rem; color: var(--ink); background: #fff;
+    font-family: "Pretendard", sans-serif; font-size: 0.9rem; color: var(--ink); background: #fff;
   }
   .rsvp-field input:focus { outline: none; border-color: var(--accent); }
   details.rsvp-consent {
-    font-family: "Noto Sans KR", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-bottom: 1rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-bottom: 1rem;
   }
   details.rsvp-consent summary {
     list-style: none; cursor: pointer; color: var(--ink);
@@ -493,15 +497,15 @@
   .rsvp-consent .consent-body { padding: 0.4rem 0 0.2rem; line-height: 1.7; }
   .rsvp-check { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; cursor: pointer; }
   .rsvp-check input { width: 16px; height: 16px; accent-color: var(--accent); }
-  .rsvp-check span { font-family: "Noto Sans KR", sans-serif; font-size: 0.82rem; color: var(--ink-soft); }
+  .rsvp-check span { font-family: "Pretendard", sans-serif; font-size: 0.82rem; color: var(--ink-soft); }
   .rsvp-submit {
     width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 40px;
-    padding: 0.85rem 0; font-family: "Noto Sans KR", sans-serif; font-size: 0.92rem; cursor: pointer;
+    padding: 0.85rem 0; font-family: "Pretendard", sans-serif; font-size: 0.92rem; cursor: pointer;
   }
   .rsvp-submit:disabled { background: var(--line); color: var(--ink-soft); cursor: not-allowed; }
   .rsvp-foot { display: flex; justify-content: center; gap: 1.4rem; margin-top: 0.9rem; }
   .rsvp-foot button {
-    background: none; border: none; font-family: "Noto Sans KR", sans-serif;
+    background: none; border: none; font-family: "Pretendard", sans-serif;
     font-size: 0.76rem; color: var(--ink-soft); text-decoration: underline; cursor: pointer;
   }
 
@@ -515,7 +519,7 @@
   /* 복사 토스트 */
   #toast {
     position: fixed; left: 50%; bottom: 2rem; transform: translateX(-50%) translateY(20px);
-    background: var(--ink); color: #fff; font-family: "Noto Sans KR", sans-serif;
+    background: var(--ink); color: #fff; font-family: "Pretendard", sans-serif;
     font-size: 0.82rem; padding: 0.7rem 1.4rem; border-radius: 40px;
     opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 50;
   }
