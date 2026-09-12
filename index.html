@@ -873,13 +873,25 @@
     });
   });
 
-  /* ---- 공유하기 ---- */
+  /* ---- 공유하기: 링크를 클립보드로 복사 ---- */
   document.getElementById('shareBtn').addEventListener('click', async ()=>{
-    const data = { title:'이주형 ❤️ 임유리 결혼합니다', text:'두 사람의 영원을 약속하는 자리에 초대합니다.', url: location.href };
-    if (navigator.share) { try{ await navigator.share(data); }catch(e){} }
-    else {
-      try{ await navigator.clipboard.writeText(location.href); showToast('링크가 복사되었습니다'); }
-      catch(e){ showToast('주소창의 링크를 복사해 주세요'); }
+    try {
+      await navigator.clipboard.writeText(location.href);
+      showToast('링크가 복사되었습니다');
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = location.href;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('링크가 복사되었습니다');
+      } catch (_) {
+        showToast('주소창의 링크를 복사해 주세요');
+      }
+      document.body.removeChild(ta);
     }
   });
 
