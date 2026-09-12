@@ -127,10 +127,11 @@
   }
   .love-script.draw { animation: love-draw-loop 4.5s ease-in-out infinite; }
   @keyframes love-draw-loop {
-    0%   { clip-path: inset(0 100% 0 0); opacity: 1; }
-    35%  { clip-path: inset(0 0 0 0);   opacity: 1; }
-    75%  { clip-path: inset(0 0 0 0);   opacity: 1; }
-    90%  { clip-path: inset(0 0 0 0);   opacity: 0; }
+    0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+    3%   { clip-path: inset(0 100% 0 0); opacity: 1; }
+    38%  { clip-path: inset(0 0 0 0);    opacity: 1; }
+    78%  { clip-path: inset(0 0 0 0);    opacity: 1; }
+    88%  { clip-path: inset(0 0 0 0);    opacity: 0; }
     100% { clip-path: inset(0 100% 0 0); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
