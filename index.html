@@ -396,6 +396,42 @@
   }
   .share-btn:active { opacity: 0.85; }
 
+  /* ---- 공유하기 시트 ---- */
+  .share-overlay {
+    position: fixed; inset: 0; z-index: 160;
+    background: rgba(51,64,47,0.45);
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .share-overlay.show { opacity: 1; visibility: visible; }
+  .share-card {
+    width: 100%; max-width: 460px;
+    background: var(--paper); border-radius: 16px 16px 0 0;
+    padding: 1.6rem 1.5rem 2rem;
+    transform: translateY(24px);
+    transition: transform 0.3s ease;
+  }
+  .share-overlay.show .share-card { transform: translateY(0); }
+  .share-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .share-head h3 { font-family: "Nanum Myeongjo", serif; font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+  .share-close { background: none; border: none; font-size: 1.4rem; line-height: 1; color: var(--ink-soft); cursor: pointer; }
+  .share-options { display: flex; justify-content: space-around; gap: 0.5rem; }
+  .share-opt {
+    background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 0.55rem;
+    font-family: "Gowun Dodum", sans-serif; font-size: 0.78rem; color: var(--ink-soft);
+  }
+  .share-opt .share-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(70,63,53,0.15);
+  }
+  .share-icon svg { width: 24px; height: 24px; }
+  .share-icon.kakao { background: #FEE500; }
+  .share-icon.sms { background: var(--accent); color: #fff; }
+  .share-icon.copy { background: var(--paper-deep); border: 1px solid var(--line); color: var(--accent); }
+
   /* 배경음악 토글 버튼 */
   .bgm-btn {
     position: fixed; top: 1rem;
@@ -740,6 +776,35 @@
 
 <div id="toast">복사되었습니다</div>
 
+<div id="shareOverlay" class="share-overlay">
+  <div class="share-card">
+    <div class="share-head">
+      <h3>청첩장 공유하기</h3>
+      <button class="share-close" id="shareClose" aria-label="닫기">&times;</button>
+    </div>
+    <div class="share-options">
+      <button type="button" class="share-opt" id="shareKakao">
+        <span class="share-icon kakao">
+          <svg viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.68 1.7 5.04 4.29 6.47-.14.5-.9 3.13-.93 3.33 0 0-.02.15.08.21.1.06.22.02.22.02.29-.04 3.36-2.2 3.89-2.57.79.11 1.61.17 2.45.17 5.52 0 10-3.58 10-8S17.52 3 12 3z"/></svg>
+        </span>
+        <span>카카오톡</span>
+      </button>
+      <button type="button" class="share-opt" id="shareSms">
+        <span class="share-icon sms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <span>문자</span>
+      </button>
+      <button type="button" class="share-opt" id="shareCopy">
+        <span class="share-icon copy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </span>
+        <span>링크 복사</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div id="rsvpOverlay" class="rsvp-overlay">
   <div class="rsvp-card">
     <div class="rsvp-head">
@@ -794,6 +859,7 @@
   <button class="lb-nav lb-next" aria-label="다음 사진">&#10095;</button>
 </div>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
   /* ====== 여기 값만 바꾸면 캘린더와 카운트다운이 자동으로 계산됩니다 ====== */
   const WEDDING_YEAR   = 2027;
@@ -873,27 +939,83 @@
     });
   });
 
-  /* ---- 공유하기: 링크를 클립보드로 복사 ---- */
-  document.getElementById('shareBtn').addEventListener('click', async ()=>{
-    try {
-      await navigator.clipboard.writeText(location.href);
-      showToast('링크가 복사되었습니다');
-    } catch (e) {
-      const ta = document.createElement('textarea');
-      ta.value = location.href;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand('copy');
-        showToast('링크가 복사되었습니다');
-      } catch (_) {
-        showToast('주소창의 링크를 복사해 주세요');
-      }
-      document.body.removeChild(ta);
+  /* ---- 공유하기: 카카오톡 / 문자 / 링크복사 시트 ---- */
+  // TODO: 카카오 개발자(developers.kakao.com)에서 앱을 만들고 JavaScript 키를 발급받아 아래에 붙여넣으세요.
+  const KAKAO_JS_KEY = '여기에_카카오_JavaScript_키를_붙여넣으세요';
+
+  (function(){
+    const shareOverlay = document.getElementById('shareOverlay');
+    const shareBtn = document.getElementById('shareBtn');
+    const shareClose = document.getElementById('shareClose');
+    const shareKakao = document.getElementById('shareKakao');
+    const shareSms = document.getElementById('shareSms');
+    const shareCopy = document.getElementById('shareCopy');
+
+    const kakaoReady = KAKAO_JS_KEY.indexOf('여기에') === -1;
+    if (kakaoReady && typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+      Kakao.init(KAKAO_JS_KEY);
     }
-  });
+
+    function openShare(){ shareOverlay.classList.add('show'); }
+    function closeShare(){ shareOverlay.classList.remove('show'); }
+
+    async function copyLink(){
+      try {
+        await navigator.clipboard.writeText(location.href);
+        showToast('링크가 복사되었습니다');
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = location.href;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast('링크가 복사되었습니다');
+        } catch (_) {
+          showToast('주소창의 링크를 복사해 주세요');
+        }
+        document.body.removeChild(ta);
+      }
+    }
+
+    shareBtn.addEventListener('click', openShare);
+    shareClose.addEventListener('click', closeShare);
+    shareOverlay.addEventListener('click', (e)=>{ if (e.target === shareOverlay) closeShare(); });
+
+    shareKakao.addEventListener('click', ()=>{
+      if (!kakaoReady || typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
+        showToast('카카오톡 공유 설정이 필요합니다');
+        return;
+      }
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '이주형 ❤️ 임유리 결혼합니다',
+          description: '2027년 1월 9일 토요일 오후 12시 · 플렌티 컨벤션',
+          imageUrl: new URL('./photos_temp/main.jpg', location.href).href,
+          link: { mobileWebUrl: location.href, webUrl: location.href }
+        },
+        buttons: [{ title: '청첩장 보기', link: { mobileWebUrl: location.href, webUrl: location.href } }]
+      });
+      closeShare();
+    });
+
+    shareSms.addEventListener('click', ()=>{
+      const body = encodeURIComponent(
+        '이주형 ❤️ 임유리 결혼합니다\n2027.01.09(토) 낮 12시 · 플렌티 컨벤션\n' + location.href
+      );
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      location.href = (isIOS ? 'sms:&body=' : 'sms:?body=') + body;
+      closeShare();
+    });
+
+    shareCopy.addEventListener('click', async ()=>{
+      await copyLink();
+      closeShare();
+    });
+  })();
 
   /* ---- 시작 화면: 탭하면 청첩장이 열리고 동시에 배경음악 소리가 켜짐 ---- */
   document.getElementById('introBtn').addEventListener('click', ()=>{
