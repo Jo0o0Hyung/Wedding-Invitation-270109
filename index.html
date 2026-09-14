@@ -531,8 +531,9 @@
   }
 
   /* 흩날리는 반짝이 */
+  /* 페이지 맨 위부터 '예식일' 섹션 직전까지만 덮는다 (높이는 JS에서 설정) */
   .sparkle-layer {
-    position: fixed; top: 0; bottom: 0; left: 50%;
+    position: absolute; top: 0; left: 50%; height: 0;
     width: 100%; max-width: 460px; transform: translateX(-50%);
     overflow: hidden; pointer-events: none; z-index: 40;
   }
@@ -548,9 +549,11 @@
   }
   .sparkle-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
   @keyframes sparkle-fall {
-    0%   { transform: translate3d(0, -8vh, 0); }
-    50%  { transform: translate3d(var(--drift), 50vh, 0); }
-    100% { transform: translate3d(0, 108vh, 0); }
+    0%   { transform: translate3d(0, -40px, 0); opacity: 0; }
+    6%   { opacity: 1; }
+    50%  { transform: translate3d(var(--drift), calc(var(--fall) * 0.5), 0); }
+    90%  { opacity: 1; }
+    100% { transform: translate3d(0, var(--fall), 0); opacity: 0; }
   }
   @keyframes sparkle-twinkle {
     0%, 100% { opacity: 0.3; transform: scale(0.6); }
@@ -1297,22 +1300,47 @@
   /* ---- 흩날리는 반짝이 ---- */
   (function(){
     const layer = document.getElementById('sparkleLayer');
-    const COUNT = 14;
+    const stopAt = document.querySelector('section.calendar');
     const flare = '<svg viewBox="-50 -50 100 100"><use href="#flare"/></svg>';
     const rand = (min, max) => min + Math.random() * (max - min);
-    let html = '';
-    for (let i = 0; i < COUNT; i++) {
-      const dur = rand(14, 24);
-      // 음수 지연으로 처음부터 화면 곳곳에 흩어진 상태로 시작
-      html += '<div class="sparkle" style="' +
-        '--x:' + rand(-4, 92).toFixed(1) + '%;' +
-        '--size:' + rand(18, 40).toFixed(1) + 'px;' +
-        '--dur:' + dur.toFixed(1) + 's;' +
-        '--delay:-' + rand(0, dur).toFixed(1) + 's;' +
-        '--drift:' + rand(-30, 30).toFixed(0) + 'px;' +
-        '--tw:' + rand(2.4, 4.5).toFixed(2) + 's;">' + flare + '</div>';
+    let builtFor = '';
+
+    function build(){
+      const height = Math.round(stopAt.getBoundingClientRect().top + window.scrollY);
+      const key = height + 'x' + window.innerWidth;
+      if (key === builtFor) return; // 모바일 주소창 변화 등으로 인한 불필요한 재시작 방지
+      builtFor = key;
+
+      layer.style.height = height + 'px';
+      layer.style.setProperty('--fall', (height + 40) + 'px');
+
+      // 화면 한 장 높이당 떨어지는 속도·밀도를 이전과 비슷하게 유지
+      const screens = Math.max(1, height / window.innerHeight);
+      const count = Math.min(36, Math.round(14 * screens));
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        const dur = rand(14, 24) * screens;
+        // 음수 지연으로 처음부터 영역 곳곳에 흩어진 상태로 시작
+        html += '<div class="sparkle" style="' +
+          '--x:' + rand(-4, 92).toFixed(1) + '%;' +
+          '--size:' + rand(18, 40).toFixed(1) + 'px;' +
+          '--dur:' + dur.toFixed(1) + 's;' +
+          '--delay:-' + rand(0, dur).toFixed(1) + 's;' +
+          '--drift:' + rand(-30, 30).toFixed(0) + 'px;' +
+          '--tw:' + rand(2.4, 4.5).toFixed(2) + 's;">' + flare + '</div>';
+      }
+      layer.innerHTML = html;
     }
-    layer.innerHTML = html;
+
+    build();
+    // 폰트·이미지 로드 후 위쪽 섹션 높이가 달라지면 경계를 다시 맞춘다
+    window.addEventListener('load', build);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    let resizeTimer;
+    window.addEventListener('resize', ()=>{
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(build, 250);
+    });
   })();
 
   /* ---- 스크롤 등장 ---- */
