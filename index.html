@@ -100,13 +100,8 @@
   .cover {
     background:
       radial-gradient(120% 80% at 50% 0%, #FAFCF6 0%, var(--paper) 55%, var(--paper-deep) 100%);
-    padding-top: 3.5rem; padding-bottom: 3.5rem;
+    padding-top: 0; padding-bottom: 3.5rem;
     text-align: center;
-  }
-  .cover .season {
-    font-family: "Pretendard", sans-serif;
-    font-size: 0.75rem; letter-spacing: 0.45em; color: var(--accent);
-    padding-left: 0.45em; margin-bottom: 2.2rem;
   }
   .cover-photo {
     position: relative;
@@ -126,19 +121,19 @@
   .love-script {
     display: inline-block; white-space: nowrap;
     font-family: "Mrs Saint Delafield", cursive;
-    font-size: 3.4rem; line-height: 1; color: rgba(0,0,0,0.88);
+    font-size: 2.3rem; line-height: 1; color: rgba(0,0,0,0.88);
     text-shadow: 0 1px 8px rgba(255,255,255,0.35);
   }
   @keyframes love-reveal-loop {
     0%   { width: 0;     opacity: 0; }
     3%   { width: 0;     opacity: 1; }
-    38%  { width: 12rem; opacity: 1; }
-    78%  { width: 12rem; opacity: 1; }
-    88%  { width: 12rem; opacity: 0; }
+    38%  { width: 17rem; opacity: 1; }
+    78%  { width: 17rem; opacity: 1; }
+    88%  { width: 17rem; opacity: 0; }
     100% { width: 0;     opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .love-script-mask { width: 12rem; opacity: 1; }
+    .love-script-mask { width: 17rem; opacity: 1; }
     .love-script-mask.draw { animation: none; }
   }
   .cover .names {
@@ -194,6 +189,18 @@
     height: 1em; width: 1em; object-fit: contain;
     vertical-align: -0.15em; margin-right: 0.12em;
     mix-blend-mode: multiply;
+  }
+
+  /* ============ 3.5. 교차 사진 ============ */
+  .duo-photos { background: var(--paper); padding: 3rem 0; }
+  .duo-row { display: flex; align-items: flex-end; }
+  .duo-row-2 { margin-top: -2.5rem; }
+  .duo-photo { flex: 0 0 68%; aspect-ratio: 3 / 4; overflow: hidden; }
+  .duo-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .duo-caption {
+    flex: 1; text-align: center;
+    font-family: "Crimson Pro", serif; font-weight: 300; letter-spacing: 0.14em;
+    color: var(--ink); font-size: 1.3rem; padding-bottom: 0.6rem;
   }
 
   /* ============ 4. 캘린더 ============ */
@@ -293,6 +300,16 @@
   .location .addr {
     font-family: "Pretendard", sans-serif; font-size: 0.9rem;
     color: var(--ink-soft); margin-bottom: 1.6rem;
+  }
+  .naver-map {
+    width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--line); margin-bottom: 1rem;
+    background: var(--paper-deep);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .naver-map-fallback {
+    font-family: "Pretendard", sans-serif; font-size: 0.8rem;
+    color: var(--ink-soft); text-align: center; padding: 1rem;
   }
   .map-box {
     width: 100%; border-radius: 10px; overflow: hidden;
@@ -538,10 +555,9 @@
 
   <!-- ============ 1. 표지 ============ -->
   <section class="cover">
-    <div class="season">WEDDING INVITATION</div>
     <div class="cover-photo reveal">
       <img src="./photos_temp/main.jpg" alt="이주형 & 임유리" />
-      <div class="love-script-mask" id="loveScriptMask"><div class="love-script">Love</div></div>
+      <div class="love-script-mask" id="loveScriptMask"><div class="love-script">We're married</div></div>
     </div>
     <div class="names reveal">
       <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
@@ -566,6 +582,21 @@
     <p class="closing reveal">
       - 아파치족 인디언들의 결혼 축시 中 -
     </p>
+    <div class="divider reveal"><span>◇</span></div>
+    <p class="poem reveal">
+      겨울에 시작된 우리의 인연은<br/>
+      봄과 여름, 가을을 지나며<br/>
+      서로의 하루에 자연스럽게 스며들었습니다.
+      <span class="gap"></span>
+      함께한 시간이 쌓여<br/>
+      다시 처음 만났던 겨울을 맞이합니다.
+      <span class="gap"></span>
+      처음의 설렘을 오래 간직하고<br/>
+      이제는 평생을 함께하기로 약속합니다.
+      <span class="gap"></span>
+      저희가 새로운 시작을 맞이하는 순간,<br/>
+      소중한 분들과 함께하고 싶습니다.
+    </p>
   </section>
 
   <!-- ============ 3. 혼주 / 신랑신부 ============ -->
@@ -578,6 +609,18 @@
     <div class="row reveal">
       <span class="parents"><b>임찬호</b> · <b>김금자</b>의 딸</span>
       <span class="child">임유리</span>
+    </div>
+  </section>
+
+  <!-- ============ 3.5. 교차 사진 ============ -->
+  <section class="duo-photos">
+    <div class="duo-row duo-row-1 reveal">
+      <div class="duo-photo"><img src="./photos_temp/002.jpg" alt="" /></div>
+      <div class="duo-caption">2027</div>
+    </div>
+    <div class="duo-row duo-row-2 reveal">
+      <div class="duo-caption">9TH JAN</div>
+      <div class="duo-photo"><img src="./photos_temp/006.jpg" alt="" /></div>
     </div>
   </section>
 
@@ -627,6 +670,9 @@
     <div class="eyebrow reveal">오시는 길</div>
     <p class="hall reveal">플렌티 컨벤션</p>
     <p class="addr reveal">서울특별시 서초구 반포대로 222<br/>가톨릭대학교 성의교정, 옴니버스파크 로비층(L)</p>
+    <div id="naverMap" class="naver-map reveal">
+      <div class="naver-map-fallback">네이버 지도 연동 설정이 필요합니다</div>
+    </div>
     <div class="map-box reveal"><img src="./plenty-map.png" alt="플렌티 컨벤션 약도" /></div>
     <div class="map-links reveal">
       <a href="https://naver.me/FgHDoDqj" target="_blank" rel="noopener">네이버 지도</a>
@@ -688,8 +734,8 @@
       <div class="acc-body">
         <div class="acc-row">
           <span class="who"><b>임유리</b></span>
-          <span class="num">○○은행 000-0000-0000</span>
-          <button class="copy-btn" data-copy="○○은행 000-0000-0000">복사</button>
+          <span class="num">신한은행 110-433-997903</span>
+          <button class="copy-btn" data-copy="신한은행 110-433-997903">복사</button>
         </div>
         <div class="acc-row">
           <span class="who"><b>어머니 ○○○</b></span>
@@ -921,6 +967,34 @@
       }
     });
   });
+
+  /* ---- 오시는 길: 네이버 지도 임베드 ---- */
+  // TODO: Naver Cloud Platform(console.ncloud.com) > AI·Application Service > Maps 에서
+  // 애플리케이션을 만들고 Client ID를 발급받아 아래에 붙여넣으세요. (Web 서비스 URL에 배포 도메인 등록 필요)
+  const NAVER_MAP_CLIENT_ID = '여기에_네이버클라우드플랫폼_Client_ID를_붙여넣으세요';
+  const VENUE_ADDRESS = '서울특별시 서초구 반포대로 222';
+
+  (function(){
+    if (NAVER_MAP_CLIENT_ID.indexOf('여기에') !== -1) return; // 키 설정 전에는 안내 문구만 표시
+
+    const script = document.createElement('script');
+    script.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + NAVER_MAP_CLIENT_ID + '&submodules=geocoder';
+    script.onload = function(){
+      naver.maps.Service.geocode({ query: VENUE_ADDRESS }, function(status, response){
+        const mapEl = document.getElementById('naverMap');
+        if (status !== naver.maps.Service.Status.OK || !response.v2.addresses.length) {
+          mapEl.querySelector('.naver-map-fallback').textContent = '지도를 불러오지 못했습니다';
+          return;
+        }
+        const item = response.v2.addresses[0];
+        const point = new naver.maps.LatLng(item.y, item.x);
+        mapEl.innerHTML = '';
+        const map = new naver.maps.Map(mapEl, { center: point, zoom: 16 });
+        new naver.maps.Marker({ position: point, map: map });
+      });
+    };
+    document.head.appendChild(script);
+  })();
 
   /* ---- 공유하기: 카카오톡 / 문자 / 링크복사 시트 ---- */
   // TODO: 카카오 개발자(developers.kakao.com)에서 앱을 만들고 JavaScript 키를 발급받아 아래에 붙여넣으세요.
