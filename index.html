@@ -187,8 +187,8 @@
   .family .parents b { color: var(--ink); font-weight: 400; }
   .family .child { font-family: "Gowun Dodum", sans-serif; font-weight: 400; color: var(--ink); font-size: 1.1rem; }
   .rip-flower {
-    height: 1em; width: 1em; object-fit: contain;
-    vertical-align: -0.15em; margin-right: 0.12em;
+    height: 1.3em; width: 1.3em; object-fit: cover; object-position: 49% 38%;
+    vertical-align: -0.3em; margin-right: 0.12em;
     mix-blend-mode: multiply;
   }
 
@@ -592,7 +592,7 @@
   <section class="family">
     <div class="eyebrow reveal">신랑 &amp; 신부</div>
     <div class="row reveal">
-      <span class="parents"><b>이춘우</b> · <b><img src="./rip_flower.PNG" alt="" class="rip-flower" />조종숙</b>의 아들</span>
+      <span class="parents"><b>이춘우</b> · <b><img src="./rip_flower4.png" alt="" class="rip-flower" />조종숙</b>의 아들</span>
       <span class="child">이주형</span>
     </div>
     <div class="row reveal">
@@ -960,43 +960,31 @@
   });
 
   /* ---- 오시는 길: 네이버 지도 임베드 ---- */
-  // TODO: Naver Cloud Platform(console.ncloud.com) > AI·Application Service > Maps 에서
-  // 애플리케이션을 만들고 Client ID를 발급받아 아래에 붙여넣으세요. (Web 서비스 URL에 배포 도메인 등록 필요)
+  // NCP 콘솔 > Application Services > Maps 에서 발급한 Client ID. (Web 서비스 URL에 배포 도메인 등록 필요)
   const NAVER_MAP_CLIENT_ID = '5imhnuq9sv';
-  const VENUE_ADDRESS = '서울특별시 서초구 반포대로 222';
+  // 플렌티 컨벤션 좌표 (고정값이라 Geocoding API 권한이 필요 없음)
+  const VENUE_LAT = 37.4991405;
+  const VENUE_LNG = 127.0054443;
 
   (function(){
-    if (NAVER_MAP_CLIENT_ID.indexOf('여기에') !== -1) return; // 키 설정 전에는 안내 문구만 표시
+    const mapEl = document.getElementById('naverMap');
+    function showFallback(msg){
+      mapEl.innerHTML = '<div class="naver-map-fallback">' + msg + '</div>';
+    }
+
+    // 인증 실패 시 SDK 기본 동작(alert)이 페이지를 멈추게 하므로 안내 문구로 대체한다.
+    window.navermap_authFailure = function(){ showFallback('지도를 불러오지 못했습니다'); };
 
     const script = document.createElement('script');
-    script.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + NAVER_MAP_CLIENT_ID + '&submodules=geocoder';
+    // 신규 NCP Maps 키는 ncpClientId가 아니라 ncpKeyId 파라미터로 인증된다.
+    script.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=' + NAVER_MAP_CLIENT_ID;
     script.onload = function(){
-      // maps.js triggers a separate async load of the geocoder submodule internally,
-      // so naver.maps.Service may not exist the instant maps.js itself finishes loading.
-      function whenGeocoderReady(retries){
-        if (window.naver && naver.maps && naver.maps.Service) { runGeocode(); return; }
-        if (retries <= 0) {
-          document.querySelector('#naverMap .naver-map-fallback').textContent = '지도를 불러오지 못했습니다';
-          return;
-        }
-        setTimeout(()=> whenGeocoderReady(retries - 1), 200);
-      }
-      function runGeocode(){
-        naver.maps.Service.geocode({ query: VENUE_ADDRESS }, function(status, response){
-          const mapEl = document.getElementById('naverMap');
-          if (status !== naver.maps.Service.Status.OK || !response.v2.addresses.length) {
-            mapEl.querySelector('.naver-map-fallback').textContent = '지도를 불러오지 못했습니다';
-            return;
-          }
-          const item = response.v2.addresses[0];
-          const point = new naver.maps.LatLng(item.y, item.x);
-          mapEl.innerHTML = '';
-          const map = new naver.maps.Map(mapEl, { center: point, zoom: 16 });
-          new naver.maps.Marker({ position: point, map: map });
-        });
-      }
-      whenGeocoderReady(15);
+      const point = new naver.maps.LatLng(VENUE_LAT, VENUE_LNG);
+      mapEl.innerHTML = '';
+      const map = new naver.maps.Map(mapEl, { center: point, zoom: 16 });
+      new naver.maps.Marker({ position: point, map: map });
     };
+    script.onerror = function(){ showFallback('지도를 불러오지 못했습니다'); };
     document.head.appendChild(script);
   })();
 
