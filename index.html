@@ -110,7 +110,7 @@
     margin-bottom: 1.8rem;
     overflow: hidden;
     background: linear-gradient(160deg, #dbe8d3, #a9c9ac);
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 9 / 16;
   }
   .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .love-script-mask {
@@ -971,18 +971,31 @@
     const script = document.createElement('script');
     script.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + NAVER_MAP_CLIENT_ID + '&submodules=geocoder';
     script.onload = function(){
-      naver.maps.Service.geocode({ query: VENUE_ADDRESS }, function(status, response){
-        const mapEl = document.getElementById('naverMap');
-        if (status !== naver.maps.Service.Status.OK || !response.v2.addresses.length) {
-          mapEl.querySelector('.naver-map-fallback').textContent = '지도를 불러오지 못했습니다';
+      // maps.js triggers a separate async load of the geocoder submodule internally,
+      // so naver.maps.Service may not exist the instant maps.js itself finishes loading.
+      function whenGeocoderReady(retries){
+        if (window.naver && naver.maps && naver.maps.Service) { runGeocode(); return; }
+        if (retries <= 0) {
+          document.querySelector('#naverMap .naver-map-fallback').textContent = '지도를 불러오지 못했습니다';
           return;
         }
-        const item = response.v2.addresses[0];
-        const point = new naver.maps.LatLng(item.y, item.x);
-        mapEl.innerHTML = '';
-        const map = new naver.maps.Map(mapEl, { center: point, zoom: 16 });
-        new naver.maps.Marker({ position: point, map: map });
-      });
+        setTimeout(()=> whenGeocoderReady(retries - 1), 200);
+      }
+      function runGeocode(){
+        naver.maps.Service.geocode({ query: VENUE_ADDRESS }, function(status, response){
+          const mapEl = document.getElementById('naverMap');
+          if (status !== naver.maps.Service.Status.OK || !response.v2.addresses.length) {
+            mapEl.querySelector('.naver-map-fallback').textContent = '지도를 불러오지 못했습니다';
+            return;
+          }
+          const item = response.v2.addresses[0];
+          const point = new naver.maps.LatLng(item.y, item.x);
+          mapEl.innerHTML = '';
+          const map = new naver.maps.Map(mapEl, { center: point, zoom: 16 });
+          new naver.maps.Marker({ position: point, map: map });
+        });
+      }
+      whenGeocoderReady(15);
     };
     document.head.appendChild(script);
   })();
