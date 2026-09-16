@@ -331,8 +331,13 @@
   }
   .transport .blk { margin-bottom: 1.1rem; }
 
-  /* ============ 7. 마음 전하실 곳 ============ */
-  .account { background: var(--paper-deep); text-align: center; }
+  /* ============ 8. 마음 전하실 곳 ============ */
+  .account { background: var(--paper); text-align: center; }
+  /* 한글 섹션 제목: 영문 필기체 대신 기존의 자간 넓은 고딕 라벨 스타일 */
+  .eyebrow.eyebrow-ko {
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem; line-height: 1.9;
+    letter-spacing: 0.5em; padding-left: 0.5em;
+  }
   .account > p.lead {
     font-family: "Pretendard", sans-serif; font-size: 0.88rem;
     color: var(--ink-soft); margin-bottom: 2rem; line-height: 1.9;
@@ -364,8 +369,8 @@
   }
   .copy-btn:active { background: #e3ecd8; }
 
-  /* ============ 8. 연락하기 ============ */
-  .contact { background: var(--paper); text-align: center; }
+  /* ============ 7. 연락하기 ============ */
+  .contact { background: var(--paper-deep); text-align: center; }
   .contact-row {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.7rem 0;
@@ -766,9 +771,48 @@
     </div>
   </section>
 
-  <!-- ============ 7. 마음 전하실 곳 ============ -->
+  <!-- ============ 7. 연락하기 ============ -->
+  <section class="contact">
+    <div class="eyebrow reveal">Contact</div>
+
+    <details class="acc reveal">
+      <summary>신랑측 <span class="chev">⌄</span></summary>
+      <div class="acc-body">
+        <div class="contact-row">
+          <span class="who">신랑 <b>이주형</b></span>
+          <span class="contact-icons">
+            <a class="icon-btn" href="tel:010-5626-6335" aria-label="이주형에게 전화">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+            <a class="icon-btn" href="sms:010-5626-6335" aria-label="이주형에게 문자">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </a>
+          </span>
+        </div>
+      </div>
+    </details>
+
+    <details class="acc reveal">
+      <summary>신부측 <span class="chev">⌄</span></summary>
+      <div class="acc-body">
+        <div class="contact-row">
+          <span class="who">신부 <b>임유리</b></span>
+          <span class="contact-icons">
+            <a class="icon-btn" href="tel:010-9632-5166" aria-label="임유리에게 전화">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+            <a class="icon-btn" href="sms:010-9632-5166" aria-label="임유리에게 문자">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </a>
+          </span>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ 8. 마음 전하실 곳 ============ -->
   <section class="account">
-    <div class="eyebrow reveal">Gift</div>
+    <div class="eyebrow eyebrow-ko reveal">마음 전하실 곳</div>
     <p class="lead reveal">
       축하의 마음을 전하고 싶으신 분들을 위해<br/>
       계좌번호를 안내드립니다.<br/>
@@ -803,45 +847,6 @@
           <span class="who"><b>어머니 ○○○</b></span>
           <span class="num">○○은행 000-0000-0000</span>
           <button class="copy-btn" data-copy="○○은행 000-0000-0000">복사</button>
-        </div>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 8. 연락하기 ============ -->
-  <section class="contact">
-    <div class="eyebrow reveal">Contact</div>
-
-    <details class="acc reveal">
-      <summary>신랑측 <span class="chev">⌄</span></summary>
-      <div class="acc-body">
-        <div class="contact-row">
-          <span class="who">신랑 <b>이주형</b></span>
-          <span class="contact-icons">
-            <a class="icon-btn" href="tel:010-5626-6335" aria-label="이주형에게 전화">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </a>
-            <a class="icon-btn" href="sms:010-5626-6335" aria-label="이주형에게 문자">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </a>
-          </span>
-        </div>
-      </div>
-    </details>
-
-    <details class="acc reveal">
-      <summary>신부측 <span class="chev">⌄</span></summary>
-      <div class="acc-body">
-        <div class="contact-row">
-          <span class="who">신부 <b>임유리</b></span>
-          <span class="contact-icons">
-            <a class="icon-btn" href="tel:010-9632-5166" aria-label="임유리에게 전화">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </a>
-            <a class="icon-btn" href="sms:010-9632-5166" aria-label="임유리에게 문자">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </a>
-          </span>
         </div>
       </div>
     </details>
