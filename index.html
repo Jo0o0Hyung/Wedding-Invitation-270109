@@ -126,13 +126,13 @@
   @keyframes love-reveal-loop {
     0%   { width: 0;     opacity: 0; }
     3%   { width: 0;     opacity: 1; }
-    38%  { width: 17rem; opacity: 1; }
-    78%  { width: 17rem; opacity: 1; }
-    88%  { width: 17rem; opacity: 0; }
+    38%  { width: var(--w, 20rem); opacity: 1; }
+    78%  { width: var(--w, 20rem); opacity: 1; }
+    88%  { width: var(--w, 20rem); opacity: 0; }
     100% { width: 0;     opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .love-script-mask { width: 17rem; opacity: 1; }
+    .love-script-mask { width: var(--w, 20rem); opacity: 1; }
     .love-script-mask.draw { animation: none; }
   }
   .cover .names {
@@ -651,7 +651,7 @@
   <section class="cover">
     <div class="cover-photo reveal">
       <img src="./photos/title.jpg" alt="이주형 & 임유리" />
-      <div class="love-script-mask" id="loveScriptMask"><div class="love-script">We're married</div></div>
+      <div class="love-script-mask" id="loveScriptMask"><div class="love-script">Here begins our forever</div></div>
     </div>
     <div class="names reveal">
       <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
@@ -1176,10 +1176,25 @@
   })();
 
   /* ---- 웰컴 게이트 없이 바로 시작: Love 모션 + RSVP 타이머 트리거 ---- */
-  setTimeout(()=>{
-    document.dispatchEvent(new Event('invitationOpened'));
-    document.getElementById('loveScriptMask').classList.add('draw');
-  }, 300);
+  (function(){
+    const mask = document.getElementById('loveScriptMask');
+    const text = mask.querySelector('.love-script');
+    // 문구가 잘리지 않도록 실제 글자 폭만큼만 펼쳐지게 한다
+    function fitWidth(){
+      mask.style.width = 'auto';
+      const w = Math.ceil(text.getBoundingClientRect().width) + 2;
+      mask.style.width = '';
+      if (w > 10) mask.style.setProperty('--w', w + 'px');
+    }
+    fitWidth();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWidth);
+    window.addEventListener('load', fitWidth);
+
+    setTimeout(()=>{
+      document.dispatchEvent(new Event('invitationOpened'));
+      mask.classList.add('draw');
+    }, 300);
+  })();
 
   /* ---- 배경음악 준비 안내 배너: 잠깐 떴다가 사라짐 ---- */
   (function(){
@@ -1251,12 +1266,10 @@
   (function(){
     const grid = document.getElementById('galleryGrid');
     const moreBtn = document.getElementById('galleryMore');
-    const hidden = galleryImgs.length - 9;
-    if (hidden <= 0) { moreBtn.style.display = 'none'; return; }
-    moreBtn.textContent = '사진 더보기 (+' + hidden + ')';
+    if (galleryImgs.length <= 9) { moreBtn.style.display = 'none'; return; }
     moreBtn.addEventListener('click', ()=>{
       const collapsed = grid.classList.toggle('collapsed');
-      moreBtn.textContent = collapsed ? ('사진 더보기 (+' + hidden + ')') : '사진 접기';
+      moreBtn.textContent = collapsed ? '사진 더보기' : '사진 접기';
     });
   })();
   lightbox.querySelector('.lb-prev').addEventListener('click', ()=> showAt(lbIndex - 1));
