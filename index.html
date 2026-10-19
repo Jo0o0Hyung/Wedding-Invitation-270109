@@ -258,6 +258,16 @@
     font-family: "Pretendard", sans-serif; font-size: 0.7rem; color: var(--ink-soft);
   }
   .grid .cell img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
+  /* 처음에는 9장만, '더보기'를 누르면 전체 */
+  .grid.collapsed .cell:nth-child(n+10) { display: none; }
+  .gallery-more {
+    display: block; margin: 1.2rem auto 0;
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem;
+    color: var(--ink); background: var(--paper);
+    border: 1px solid var(--line); border-radius: 40px;
+    padding: 0.6rem 1.6rem; cursor: pointer;
+  }
+  .gallery-more:active { background: #e3ecd8; }
 
   /* 갤러리 라이트박스 */
   #lightbox {
@@ -290,6 +300,11 @@
     border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25);
     color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
+  }
+  #lightbox .lb-count {
+    position: absolute; top: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem;
+    color: rgba(255,255,255,0.85); letter-spacing: 0.05em;
   }
   #lightbox .lb-prev { left: 1rem; }
   #lightbox .lb-next { right: 1rem; }
@@ -642,7 +657,7 @@
       <span>이주형</span><span class="amp">&amp;</span><span>임유리</span>
     </div>
     <div class="date-line reveal">2027. 01. 09. 토요일 오후 12시</div>
-    <div class="place-line reveal">플렌티 컨벤션 웨딩홀 1층</div>
+    <div class="place-line reveal">플렌티 컨벤션</div>
   </section>
 
   <!-- ============ 2. 인사말 ============ -->
@@ -720,7 +735,7 @@
   <!-- ============ 5. 갤러리 ============ -->
   <section class="gallery">
     <div class="eyebrow reveal">Gallery</div>
-    <div class="grid reveal">
+    <div class="grid collapsed reveal" id="galleryGrid">
       <div class="cell"><img src="./photos/001.jpg" alt="" loading="lazy" decoding="async" /></div>
       <div class="cell"><img src="./photos/002.jpg" alt="" loading="lazy" decoding="async" /></div>
       <div class="cell"><img src="./photos/003.jpg" alt="" loading="lazy" decoding="async" /></div>
@@ -746,6 +761,7 @@
       <div class="cell"><img src="./photos/023.jpg" alt="" loading="lazy" decoding="async" /></div>
       <div class="cell"><img src="./photos/024.jpg" alt="" loading="lazy" decoding="async" /></div>
     </div>
+    <button type="button" class="gallery-more reveal" id="galleryMore">사진 더보기</button>
   </section>
 
   <!-- ============ 6. 오시는 길 ============ -->
@@ -968,6 +984,7 @@
 
 <div id="lightbox">
   <button class="lb-close" aria-label="닫기">&times;</button>
+  <div class="lb-count" id="lbCount"></div>
   <button class="lb-nav lb-prev" aria-label="이전 사진">&#10094;</button>
   <img src="" alt="" />
   <button class="lb-nav lb-next" aria-label="다음 사진">&#10095;</button>
@@ -1216,6 +1233,7 @@
     lbIndex = (index + galleryImgs.length) % galleryImgs.length;
     const img = galleryImgs[lbIndex];
     lightboxImg.src = img.src; lightboxImg.alt = img.alt || '';
+    document.getElementById('lbCount').textContent = (lbIndex + 1) + ' / ' + galleryImgs.length;
   }
   function openLightbox(index){
     showAt(index);
@@ -1228,6 +1246,19 @@
   galleryImgs.forEach((img, i)=>{
     img.addEventListener('click', ()=> openLightbox(i));
   });
+
+  /* ---- 갤러리 더보기 ---- */
+  (function(){
+    const grid = document.getElementById('galleryGrid');
+    const moreBtn = document.getElementById('galleryMore');
+    const hidden = galleryImgs.length - 9;
+    if (hidden <= 0) { moreBtn.style.display = 'none'; return; }
+    moreBtn.textContent = '사진 더보기 (+' + hidden + ')';
+    moreBtn.addEventListener('click', ()=>{
+      const collapsed = grid.classList.toggle('collapsed');
+      moreBtn.textContent = collapsed ? ('사진 더보기 (+' + hidden + ')') : '사진 접기';
+    });
+  })();
   lightbox.querySelector('.lb-prev').addEventListener('click', ()=> showAt(lbIndex - 1));
   lightbox.querySelector('.lb-next').addEventListener('click', ()=> showAt(lbIndex + 1));
   lightbox.addEventListener('click', (e)=>{
