@@ -1253,7 +1253,7 @@
     lbIndex = (index + galleryImgs.length) % galleryImgs.length;
     const img = galleryImgs[lbIndex];
     lightboxImg.src = img.src; lightboxImg.alt = img.alt || '';
-    document.getElementById('lbCount').textContent = (lbIndex + 1) + ' / ' + galleryImgs.length;
+    document.getElementById('lbCount').textContent = (lbIndex + 1) + '/' + galleryImgs.length;
   }
   function openLightbox(index){
     showAt(index);
