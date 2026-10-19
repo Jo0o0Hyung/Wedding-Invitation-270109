@@ -32,7 +32,8 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { font-size: var(--fs-base); -webkit-text-size-adjust: 100%; }
+  /* 세로 스크롤만 허용해 확대(핀치·더블탭)를 막는다 */
+  html { font-size: var(--fs-base); -webkit-text-size-adjust: 100%; touch-action: pan-y; }
 
   body {
     background: #cfd9c6;            /* 화면 양옆 여백 색 */
@@ -123,7 +124,7 @@
   }
   /* 두 줄을 좌우로 어긋나게 두어 가로를 넓게 쓴다 */
   .love-script .ls-line:nth-child(1) { margin-left: 5%; margin-right: auto; }
-  .love-script .ls-line:nth-child(2) { margin-left: auto; margin-right: 5%; }
+  .love-script .ls-line:nth-child(2) { margin-left: auto; margin-right: 5%; margin-top: -0.25em; }
   /* 펜이 지나가듯 왼쪽에서 오른쪽으로 번지며 한 줄씩 써진다 */
   .love-script .ls-line {
     display: block; white-space: nowrap;
@@ -318,9 +319,9 @@
   }
   #lightbox .lb-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
-    width: 2.6rem; height: 2.6rem; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25);
-    color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer;
+    border: none; background: none; padding: 0.6rem;
+    color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     display: flex; align-items: center; justify-content: center;
   }
   #lightbox .lb-count {
@@ -1020,6 +1021,11 @@
   const WEDDING_DAY    = 9;    // 9일 (토요일)
   const WEDDING_HOUR   = 12;   // 오후 12시
   const WEDDING_MINUTE = 0;
+
+  /* ---- 확대 막기: iOS는 viewport 설정을 무시하므로 두 손가락 동작을 직접 막는다 ---- */
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function(type){
+    document.addEventListener(type, function(e){ e.preventDefault(); }, { passive: false });
+  });
 
   /* ---- 캘린더 그리기 ---- */
   (function buildCalendar(){
