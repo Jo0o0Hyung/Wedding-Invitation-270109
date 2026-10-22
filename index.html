@@ -303,6 +303,11 @@
     color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
   }
+  /* 사진이 화면 폭을 채우면 사진보다 앞에 있는 요소가 덮이므로 순서를 고정한다 */
+  #lightbox img { position: relative; z-index: 1; }
+  #lightbox .lb-close,
+  #lightbox .lb-count,
+  #lightbox .lb-nav { z-index: 2; }
   #lightbox .lb-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
     border: none; padding: 0.6rem 0.8rem;
