@@ -305,9 +305,11 @@
   }
   #lightbox .lb-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
-    border: none; background: none; padding: 0.6rem;
+    border: none; padding: 0.6rem 0.8rem;
     color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    /* 밝은 사진 위에서도 흰 화살표가 묻히지 않도록 은은한 어두운 번짐 */
+    background: radial-gradient(closest-side, rgba(0,0,0,0.45), rgba(0,0,0,0));
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.7);
     display: flex; align-items: center; justify-content: center;
   }
   #lightbox .lb-count {
@@ -415,14 +417,6 @@
     background: radial-gradient(120% 80% at 50% 100%, #FAFCF6 0%, var(--paper) 60%);
     text-align: center; padding-bottom: 3rem;
   }
-  .outro .thanks {
-    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
-    font-size: 1.15rem; color: var(--ink); line-height: 2; margin-bottom: 0.8rem;
-  }
-  .outro .closing {
-    font-family: "Pretendard", sans-serif; font-size: 0.85rem;
-    color: var(--ink-soft); margin-bottom: 2rem;
-  }
   .outro .names-sm {
     font-family: "Pretendard", sans-serif; font-size: 0.9rem; color: var(--ink-soft);
     letter-spacing: 0.1em; margin-bottom: 2.5rem;
@@ -434,6 +428,20 @@
     padding: 0.8rem 1.8rem; cursor: pointer;
   }
   .share-btn:active { opacity: 0.85; }
+
+  /* ============ 10. 축시 (사진 위) ============ */
+  .poem-photo { position: relative; padding: 0; }
+  .poem-photo img { width: 100%; height: auto; display: block; }
+  .poem-overlay {
+    position: absolute; left: 5.5%; right: 5.5%; bottom: 5.5%;
+    background: rgba(40,46,38,0.55);
+    padding: 1.1rem 1.2rem; border-radius: 4px; text-align: left;
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem; line-height: 1.95;
+    color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  }
+  .poem-overlay .src {
+    margin-top: 0.7rem; font-size: 0.75rem; color: rgba(255,255,255,0.78);
+  }
 
   /* ---- 공유하기 시트 ---- */
   .share-overlay {
@@ -895,15 +903,22 @@
   <!-- ============ 9. 마무리 / 공유 ============ -->
   <section class="outro">
     <div class="divider reveal"><span>◇</span></div>
-    <p class="thanks reveal">
-      이제 두 사람은 비를 맞지 않으리라.<br/>
-      서로가 서로에게 지붕이 되어 줄 테니까.<br/>
-      이제 두 사람은 춥지 않으리라.<br/>
-      서로가 서로에게 따뜻함이 될 테니까.
-    </p>
-    <p class="closing reveal">- 아파치족 인디언들의 결혼 축시 中 -</p>
     <p class="names-sm reveal">이주형 &amp; 임유리 올림</p>
     <button class="share-btn reveal" id="shareBtn">청첩장 공유하기</button>
+  </section>
+
+  <!-- ============ 10. 축시 (사진 위) ============ -->
+  <section class="poem-photo">
+    <img src="./photos/sub_poem.jpg" alt="" loading="lazy" decoding="async" />
+    <div class="poem-overlay reveal">
+      <p>
+        이제 두 사람은 비를 맞지 않으리라.<br/>
+        서로가 서로에게 지붕이 되어 줄 테니까.<br/>
+        이제 두 사람은 춥지 않으리라.<br/>
+        서로가 서로에게 따뜻함이 될 테니까.
+      </p>
+      <p class="src">아파치족 인디언들의 결혼 축시 中</p>
+    </div>
   </section>
 
 </div>
