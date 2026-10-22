@@ -311,7 +311,9 @@
   #lightbox .lb-nav {
     position: absolute; top: 50%; transform: translateY(-50%);
     border: none; padding: 0.6rem 0.8rem;
-    color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;
+    /* 화살표는 작게, 누르는 영역은 그대로 (42x51px) */
+    min-width: 42px; min-height: 51px;
+    color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer;
     /* 밝은 사진 위에서도 흰 화살표가 묻히지 않도록 은은한 어두운 번짐 */
     background: radial-gradient(closest-side, rgba(0,0,0,0.45), rgba(0,0,0,0));
     text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.7);
