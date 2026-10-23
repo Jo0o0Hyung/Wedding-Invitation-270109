@@ -1155,13 +1155,13 @@
   (function(){
     const ACCOUNTS = {
       groom: { title: '신랑 측 계좌', items: [
-        { who: '신랑 이주형',   bank: '하나은행', num: '150-910745-70507' },
-        { who: '아버지 이춘우', bank: '하나은행', num: '628-910454-69407' }
+        { role: '신랑',   name: '이주형', bank: '하나은행', num: '150-910745-70507' },
+        { role: '아버지', name: '이춘우', bank: '하나은행', num: '628-910454-69407' }
       ]},
       bride: { title: '신부 측 계좌', items: [
-        { who: '신부 임유리',   bank: '우리은행', num: '1002-965-028056' },
-        { who: '아버지 임찬호', bank: '신한은행', num: '110-454-637368' },
-        { who: '어머니 김금자', bank: '신한은행', num: '110-482-742422' }
+        { role: '신부',   name: '임유리', bank: '우리은행', num: '1002-965-028056' },
+        { role: '아버지', name: '임찬호', bank: '신한은행', num: '110-454-637368' },
+        { role: '어머니', name: '김금자', bank: '신한은행', num: '110-482-742422' }
       ]}
     };
     const overlay = document.getElementById('accountOverlay');
@@ -1175,8 +1175,8 @@
       listEl.innerHTML = data.items.map(function(it){
         const full = it.bank + ' ' + it.num;
         return '<div class="acct-item">' +
-          '<div class="acct-who">' + it.bank + ' (예금주 : ' + it.who + ')</div>' +
-          '<div class="acct-num">' + it.num + '</div>' +
+          '<div class="acct-who">' + it.role + ' (예금주 : ' + it.name + ')</div>' +
+          '<div class="acct-num">' + full + '</div>' +
           '<button type="button" class="acct-copy" data-copy="' + full + '">계좌번호 복사</button>' +
           '</div>';
       }).join('');
