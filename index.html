@@ -388,19 +388,57 @@
   details.acc summary .chev { color: var(--accent); transition: transform 0.2s; }
   details.acc[open] summary .chev { transform: rotate(180deg); }
   .acc-body { padding: 0 1.3rem 1.2rem; }
-  .acc-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.7rem 0; border-top: 1px dashed var(--line);
-    font-family: "Pretendard", sans-serif; font-size: 0.85rem; color: var(--ink-soft);
+
+  /* 계좌: 버튼을 누르면 팝업으로 계좌번호를 보여준다 */
+  .gift-buttons { display: flex; flex-direction: column; gap: 0.7rem; }
+  .gift-btn {
+    width: 100%; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 40px; padding: 0.95rem 1rem; cursor: pointer;
+    font-family: "Pretendard", sans-serif; font-size: 0.95rem; color: var(--ink);
   }
-  .acc-row .who b { color: var(--ink); font-weight: 400; font-size: 0.9rem; }
-  .acc-row .num { color: var(--ink); }
-  .copy-btn {
-    font-family: "Pretendard", sans-serif; font-size: 0.72rem;
-    border: 1px solid var(--gold); color: var(--accent); background: transparent;
-    border-radius: 30px; padding: 0.35rem 0.8rem; cursor: pointer; white-space: nowrap;
+  .gift-btn:active { background: #e3ecd8; }
+
+  .account-overlay {
+    position: fixed; inset: 0; z-index: 170;
+    background: rgba(51,64,47,0.45);
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
   }
-  .copy-btn:active { background: #e3ecd8; }
+  .account-overlay.show { opacity: 1; visibility: visible; }
+  .account-card {
+    width: 100%; max-width: 360px; max-height: 80vh; overflow-y: auto;
+    background: #fff; border-radius: 10px; padding: 1.5rem 1.4rem 1.3rem;
+    transform: translateY(12px); transition: transform 0.25s ease;
+  }
+  .account-overlay.show .account-card { transform: translateY(0); }
+  .account-card h3 {
+    font-family: "Gowun Dodum", sans-serif; font-weight: 400;
+    font-size: 1.1rem; color: var(--ink);
+    padding-bottom: 0.9rem; border-bottom: 1px solid var(--line);
+  }
+  .acct-item { padding: 1.1rem 0; border-bottom: 1px dashed var(--line); }
+  .acct-item:last-of-type { border-bottom: none; }
+  .acct-who {
+    font-family: "Pretendard", sans-serif; font-size: 0.88rem; color: var(--ink-soft);
+  }
+  .acct-num {
+    font-family: "Pretendard", sans-serif; font-size: 1.05rem; color: var(--ink);
+    margin: 0.3rem 0 0.7rem; letter-spacing: 0.01em;
+  }
+  .acct-copy {
+    background: var(--ink); color: #fff; border: none; border-radius: 30px;
+    padding: 0.55rem 1.1rem; cursor: pointer;
+    font-family: "Pretendard", sans-serif; font-size: 0.82rem;
+  }
+  .acct-copy:active { opacity: 0.85; }
+  .account-close {
+    width: 100%; margin-top: 1rem; background: none;
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 0.8rem 0; cursor: pointer;
+    font-family: "Pretendard", sans-serif; font-size: 0.9rem; color: var(--accent);
+  }
+  .account-close:active { background: #e3ecd8; }
 
   /* ============ 7. 연락하기 ============ */
   .contact { background: var(--paper-deep); text-align: center; }
@@ -904,42 +942,10 @@
       따뜻한 마음에 깊이 감사드립니다.
     </p>
 
-    <details class="acc reveal">
-      <summary>신랑측 <span class="chev">⌄</span></summary>
-      <div class="acc-body">
-        <div class="acc-row">
-          <span class="who"><b>이주형</b></span>
-          <span class="num">하나은행 150-910745-70507</span>
-          <button class="copy-btn" data-copy="하나은행 150-910745-70507">복사</button>
-        </div>
-        <div class="acc-row">
-          <span class="who"><b>아버지 이춘우</b></span>
-          <span class="num">하나은행 628-910454-69407</span>
-          <button class="copy-btn" data-copy="하나은행 628-910454-69407">복사</button>
-        </div>
-      </div>
-    </details>
-
-    <details class="acc reveal">
-      <summary>신부측 <span class="chev">⌄</span></summary>
-      <div class="acc-body">
-        <div class="acc-row">
-          <span class="who"><b>임유리</b></span>
-          <span class="num">우리은행 1002-965-028056</span>
-          <button class="copy-btn" data-copy="우리은행 1002-965-028056">복사</button>
-        </div>
-        <div class="acc-row">
-          <span class="who"><b>아버지 임찬호</b></span>
-          <span class="num">신한은행 110-454-637368</span>
-          <button class="copy-btn" data-copy="신한은행 110-454-637368">복사</button>
-        </div>
-        <div class="acc-row">
-          <span class="who"><b>어머니 김금자</b></span>
-          <span class="num">신한은행 110-482-742422</span>
-          <button class="copy-btn" data-copy="신한은행 110-482-742422">복사</button>
-        </div>
-      </div>
-    </details>
+    <div class="gift-buttons reveal">
+      <button type="button" class="gift-btn" data-side="groom">신랑 측 계좌번호</button>
+      <button type="button" class="gift-btn" data-side="bride">신부 측 계좌번호</button>
+    </div>
   </section>
 
   <!-- ============ 9. 마무리 / 공유 ============ -->
@@ -1047,6 +1053,14 @@
   </div>
 </div>
 
+<div id="accountOverlay" class="account-overlay">
+  <div class="account-card">
+    <h3 id="accountTitle">신랑 측 계좌</h3>
+    <div id="accountList"></div>
+    <button type="button" class="account-close" id="accountClose">닫기</button>
+  </div>
+</div>
+
 <div id="lightbox">
   <button class="lb-close" aria-label="닫기">&times;</button>
   <div class="lb-count" id="lbCount"></div>
@@ -1127,18 +1141,59 @@
     toast.textContent = msg; toast.classList.add('show');
     setTimeout(()=>toast.classList.remove('show'), 1600);
   }
-  document.querySelectorAll('.copy-btn').forEach(btn=>{
-    btn.addEventListener('click', async ()=>{
-      const text = btn.dataset.copy;
-      try { await navigator.clipboard.writeText(text); showToast('계좌번호가 복사되었습니다'); }
-      catch(e){
-        const ta=document.createElement('textarea'); ta.value=text;
-        document.body.appendChild(ta); ta.select();
-        try{ document.execCommand('copy'); showToast('계좌번호가 복사되었습니다'); }catch(_){}
-        document.body.removeChild(ta);
-      }
+  async function copyAccount(text){
+    try { await navigator.clipboard.writeText(text); showToast('계좌번호가 복사되었습니다'); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=text;
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); showToast('계좌번호가 복사되었습니다'); }catch(_){}
+      document.body.removeChild(ta);
+    }
+  }
+
+  /* ---- 계좌 팝업 ---- */
+  (function(){
+    const ACCOUNTS = {
+      groom: { title: '신랑 측 계좌', items: [
+        { who: '신랑 이주형',   bank: '하나은행', num: '150-910745-70507' },
+        { who: '아버지 이춘우', bank: '하나은행', num: '628-910454-69407' }
+      ]},
+      bride: { title: '신부 측 계좌', items: [
+        { who: '신부 임유리',   bank: '우리은행', num: '1002-965-028056' },
+        { who: '아버지 임찬호', bank: '신한은행', num: '110-454-637368' },
+        { who: '어머니 김금자', bank: '신한은행', num: '110-482-742422' }
+      ]}
+    };
+    const overlay = document.getElementById('accountOverlay');
+    const titleEl = document.getElementById('accountTitle');
+    const listEl = document.getElementById('accountList');
+
+    function open(side){
+      const data = ACCOUNTS[side];
+      if (!data) return;
+      titleEl.textContent = data.title;
+      listEl.innerHTML = data.items.map(function(it){
+        const full = it.bank + ' ' + it.num;
+        return '<div class="acct-item">' +
+          '<div class="acct-who">' + it.bank + ' (예금주 : ' + it.who + ')</div>' +
+          '<div class="acct-num">' + it.num + '</div>' +
+          '<button type="button" class="acct-copy" data-copy="' + full + '">계좌번호 복사</button>' +
+          '</div>';
+      }).join('');
+      overlay.classList.add('show');
+    }
+    function close(){ overlay.classList.remove('show'); }
+
+    document.querySelectorAll('.gift-btn').forEach(function(btn){
+      btn.addEventListener('click', ()=> open(btn.dataset.side));
     });
-  });
+    document.getElementById('accountClose').addEventListener('click', close);
+    overlay.addEventListener('click', (e)=>{ if (e.target === overlay) close(); });
+    listEl.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.acct-copy');
+      if (btn) copyAccount(btn.dataset.copy);
+    });
+  })();
 
   /* ---- 오시는 길: 네이버 지도 임베드 ---- */
   // NCP 콘솔 > Application Services > Maps 에서 발급한 Client ID. (Web 서비스 URL에 배포 도메인 등록 필요)
