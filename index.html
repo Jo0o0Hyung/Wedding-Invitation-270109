@@ -913,9 +913,9 @@
           <button class="copy-btn" data-copy="하나은행 150-910745-70507">복사</button>
         </div>
         <div class="acc-row">
-          <span class="who"><b>아버지 ○○○</b></span>
-          <span class="num">○○은행 000-0000-0000</span>
-          <button class="copy-btn" data-copy="○○은행 000-0000-0000">복사</button>
+          <span class="who"><b>아버지 이춘우</b></span>
+          <span class="num">하나은행 628-910454-69407</span>
+          <button class="copy-btn" data-copy="하나은행 628-910454-69407">복사</button>
         </div>
       </div>
     </details>
@@ -929,9 +929,14 @@
           <button class="copy-btn" data-copy="우리은행 1002-965-028056">복사</button>
         </div>
         <div class="acc-row">
-          <span class="who"><b>어머니 ○○○</b></span>
-          <span class="num">○○은행 000-0000-0000</span>
-          <button class="copy-btn" data-copy="○○은행 000-0000-0000">복사</button>
+          <span class="who"><b>아버지 임찬호</b></span>
+          <span class="num">신한은행 110-454-637368</span>
+          <button class="copy-btn" data-copy="신한은행 110-454-637368">복사</button>
+        </div>
+        <div class="acc-row">
+          <span class="who"><b>어머니 김금자</b></span>
+          <span class="num">신한은행 110-482-742422</span>
+          <button class="copy-btn" data-copy="신한은행 110-482-742422">복사</button>
         </div>
       </div>
     </details>
@@ -1327,6 +1332,25 @@
   lightbox.addEventListener('click', (e)=>{
     if (e.target === lightbox || e.target.classList.contains('lb-close')) closeLightbox();
   });
+
+  /* ---- 확대 화면에서 좌우로 밀어 사진 넘기기 ---- */
+  (function(){
+    let startX = null, startY = null;
+    lightbox.addEventListener('touchstart', (e)=>{
+      if (e.touches.length !== 1) { startX = null; return; }
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', (e)=>{
+      if (startX === null) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX, dy = t.clientY - startY;
+      startX = null;
+      // 세로로 흐른 동작은 무시하고, 가로로 충분히 민 경우에만 넘긴다
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        showAt(lbIndex + (dx < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+  })();
   document.addEventListener('keydown', (e)=>{
     if (!lightbox.classList.contains('show')) return;
     if (e.key === 'Escape') closeLightbox();
