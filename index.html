@@ -569,13 +569,31 @@
   }
   .rsvp-info div { display: flex; gap: 0.7rem; padding: 0.25rem 0; }
   .rsvp-info b { color: var(--ink); font-weight: 400; min-width: 3.4rem; }
-  .rsvp-tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
-  .rsvp-tab {
-    flex: 1; text-align: center; padding: 0.6rem 0;
-    font-family: "Pretendard", sans-serif; font-size: 0.88rem; color: var(--ink-soft);
-    background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;
+  .rsvp-side-q {
+    font-family: "Pretendard", sans-serif; font-size: 0.86rem; color: var(--ink);
+    text-align: center; margin-bottom: 0.9rem;
   }
-  .rsvp-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .rsvp-side-pick { display: flex; gap: 0.7rem; margin-bottom: 0.2rem; }
+  .rsvp-side-pick button {
+    flex: 1; padding: 1.1rem 0; border: 1px solid var(--line); border-radius: 12px; background: #fff;
+    font-family: "Pretendard", sans-serif; font-size: 0.98rem; color: var(--ink);
+    line-height: 1.45; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  }
+  .rsvp-side-pick button small {
+    display: block; font-size: 0.72rem; color: var(--ink-soft); margin-top: 0.2rem;
+  }
+  .rsvp-side-pick button:hover, .rsvp-side-pick button:active { border-color: var(--accent); color: var(--accent); }
+  .rsvp-chosen {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 0.65rem 0.8rem; margin-bottom: 1rem;
+    font-family: "Pretendard", sans-serif; font-size: 0.85rem; color: var(--ink-soft);
+  }
+  .rsvp-chosen b { font-weight: 400; color: var(--accent); }
+  .rsvp-chosen button {
+    flex: none; background: none; border: none; font-family: "Pretendard", sans-serif;
+    font-size: 0.76rem; color: var(--ink-soft); text-decoration: underline; cursor: pointer;
+  }
   .rsvp-field { margin-bottom: 0.9rem; }
   .rsvp-field label {
     display: block; font-family: "Pretendard", sans-serif; font-size: 0.78rem;
@@ -1022,31 +1040,40 @@
       <div><b>예식일</b><span>2027년 1월 9일 토요일 오후 12시</span></div>
       <div><b>장소</b><span>플렌티 컨벤션</span></div>
     </div>
-    <div class="rsvp-tabs">
-      <button type="button" class="rsvp-tab active" data-side="신랑측">신랑측</button>
-      <button type="button" class="rsvp-tab" data-side="신부측">신부측</button>
-    </div>
-    <div class="rsvp-field">
-      <label for="rsvpName">성함</label>
-      <input type="text" id="rsvpName" placeholder="성함을 입력해주세요" />
-    </div>
-    <div class="rsvp-field">
-      <label for="rsvpCount">참석인원 (본인 포함)</label>
-      <input type="number" id="rsvpCount" min="1" inputmode="numeric" placeholder="숫자만 입력해주세요" />
-    </div>
-    <details class="rsvp-consent">
-      <summary>개인정보 수집 및 이용 동의 (필수) <span class="chev">⌄</span></summary>
-      <div class="consent-body">
-        수집 항목: 성함, 참석인원, 신랑측·신부측 구분<br/>
-        수집 목적: 예식 참석 인원 확인 및 좌석·식사 안내<br/>
-        보유 기간: 예식일로부터 1개월간 보관 후 파기
+    <div id="rsvpStep1">
+      <p class="rsvp-side-q">어느 분의 하객으로 참석하시나요?</p>
+      <div class="rsvp-side-pick">
+        <button type="button" data-side="신랑측">신랑측<small>이주형</small></button>
+        <button type="button" data-side="신부측">신부측<small>임유리</small></button>
       </div>
-    </details>
-    <label class="rsvp-check">
-      <input type="checkbox" id="rsvpConsent" />
-      <span>수집 및 이용에 동의합니다.</span>
-    </label>
-    <button class="rsvp-submit" id="rsvpSubmit" disabled>참석의사 전달</button>
+    </div>
+    <div id="rsvpStep2" hidden>
+      <div class="rsvp-chosen">
+        <span><b id="rsvpSideLabel">신랑측</b> 하객으로 참석합니다</span>
+        <button type="button" id="rsvpSideChange">변경</button>
+      </div>
+      <div class="rsvp-field">
+        <label for="rsvpName">성함</label>
+        <input type="text" id="rsvpName" placeholder="성함을 입력해주세요" />
+      </div>
+      <div class="rsvp-field">
+        <label for="rsvpCount">참석인원 (본인 포함)</label>
+        <input type="number" id="rsvpCount" min="1" inputmode="numeric" placeholder="숫자만 입력해주세요" />
+      </div>
+      <details class="rsvp-consent">
+        <summary>개인정보 수집 및 이용 동의 (필수) <span class="chev">⌄</span></summary>
+        <div class="consent-body">
+          수집 항목: 성함, 참석인원, 신랑측·신부측 구분<br/>
+          수집 목적: 예식 참석 인원 확인 및 좌석·식사 안내<br/>
+          보유 기간: 예식일로부터 1개월간 보관 후 파기
+        </div>
+      </details>
+      <label class="rsvp-check">
+        <input type="checkbox" id="rsvpConsent" />
+        <span>수집 및 이용에 동의합니다.</span>
+      </label>
+      <button class="rsvp-submit" id="rsvpSubmit" disabled>참석의사 전달</button>
+    </div>
     <div class="rsvp-foot">
       <button type="button" id="rsvpDismiss">닫기</button>
     </div>
@@ -1422,12 +1449,16 @@
     const card = overlay.querySelector('.rsvp-card');
     const closeBtn = document.getElementById('rsvpClose');
     const dismissBtn = document.getElementById('rsvpDismiss');
-    const tabs = overlay.querySelectorAll('.rsvp-tab');
+    const step1 = document.getElementById('rsvpStep1');
+    const step2 = document.getElementById('rsvpStep2');
+    const sideBtns = overlay.querySelectorAll('.rsvp-side-pick button');
+    const sideLabel = document.getElementById('rsvpSideLabel');
+    const sideChange = document.getElementById('rsvpSideChange');
     const nameInput = document.getElementById('rsvpName');
     const countInput = document.getElementById('rsvpCount');
     const consentCheck = document.getElementById('rsvpConsent');
     const submitBtn = document.getElementById('rsvpSubmit');
-    let side = '신랑측';
+    let side = '';
 
     // 카카오톡 인앱 브라우저 등 일부 환경은 localStorage 접근이 막혀 있어
     // 예외가 나도 RSVP 기능 자체가 멈추지 않도록 안전하게 감싼다.
@@ -1444,8 +1475,15 @@
     function shouldShow(){
       return safeGet('rsvpSubmitted') !== 'true';
     }
+    // 신랑측/신부측을 먼저 고르는 1단계로 되돌린다.
+    function resetToStep1(){
+      side = '';
+      step1.hidden = false;
+      step2.hidden = true;
+      card.scrollTop = 0;
+    }
     function openRsvp(){
-      if (shouldShow()) overlay.classList.add('show');
+      if (shouldShow()) { resetToStep1(); overlay.classList.add('show'); }
     }
     function closeRsvp(){ overlay.classList.remove('show'); }
 
@@ -1457,13 +1495,16 @@
     dismissBtn.addEventListener('click', closeRsvp);
     overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeRsvp(); });
 
-    tabs.forEach(tab=>{
-      tab.addEventListener('click', ()=>{
-        tabs.forEach(t=>t.classList.remove('active'));
-        tab.classList.add('active');
-        side = tab.dataset.side;
+    sideBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        side = btn.dataset.side;
+        sideLabel.textContent = side;
+        step1.hidden = true;
+        step2.hidden = false;
+        card.scrollTop = 0;
       });
     });
+    sideChange.addEventListener('click', resetToStep1);
 
     consentCheck.addEventListener('change', ()=>{
       submitBtn.disabled = !consentCheck.checked;
@@ -1472,6 +1513,7 @@
     submitBtn.addEventListener('click', async ()=>{
       const name = nameInput.value.trim();
       const count = countInput.value.trim();
+      if (!side) { resetToStep1(); return; }
       if (!name) { showToast('성함을 입력해주세요'); return; }
       if (!count || Number(count) < 1) { showToast('참석인원을 입력해주세요'); return; }
 
