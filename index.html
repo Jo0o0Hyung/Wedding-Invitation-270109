@@ -1120,6 +1120,37 @@
     }, { passive: false });
   });
 
+  /* ---- 팝업이 열려 있는 동안 뒤 페이지가 밀리지 않게 잠근다 ----
+     body의 overflow:hidden만으로는 iOS에서 막히지 않으므로,
+     현재 스크롤 위치를 기억했다가 body를 그 위치에 고정하고 닫을 때 되돌린다.
+     팝업이 겹쳐 열려도 마지막 하나가 닫힐 때만 풀리도록 열린 목록으로 센다. */
+  const openOverlays = new Set();
+  let lockedScrollY = 0;
+  function setOverlayOpen(key, isOpen){
+    const wasLocked = openOverlays.size > 0;
+    if (isOpen) openOverlays.add(key); else openOverlays.delete(key);
+    const nowLocked = openOverlays.size > 0;
+    if (wasLocked === nowLocked) return;
+    const body = document.body;
+    if (nowLocked) {
+      lockedScrollY = window.scrollY || window.pageYOffset || 0;
+      body.style.position = 'fixed';
+      body.style.top = (-lockedScrollY) + 'px';
+      body.style.left = '0';
+      body.style.right = '0';
+      body.style.width = '100%';
+      body.style.overflow = 'hidden';
+    } else {
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.width = '';
+      body.style.overflow = '';
+      window.scrollTo(0, lockedScrollY);
+    }
+  }
+
   /* ---- 캘린더 그리기 ---- */
   (function buildCalendar(){
     const body = document.getElementById('cal-body');
@@ -1218,8 +1249,12 @@
           '</div>';
       }).join('');
       overlay.classList.add('show');
+      setOverlayOpen('account', true);
     }
-    function close(){ overlay.classList.remove('show'); }
+    function close(){
+      overlay.classList.remove('show');
+      setOverlayOpen('account', false);
+    }
 
     document.querySelectorAll('.gift-btn').forEach(function(btn){
       btn.addEventListener('click', ()=> open(btn.dataset.side));
@@ -1275,8 +1310,8 @@
 
     const kakaoReady = KAKAO_JS_KEY.indexOf('여기에') === -1;
 
-    function openShare(){ shareOverlay.classList.add('show'); }
-    function closeShare(){ shareOverlay.classList.remove('show'); }
+    function openShare(){ shareOverlay.classList.add('show'); setOverlayOpen('share', true); }
+    function closeShare(){ shareOverlay.classList.remove('show'); setOverlayOpen('share', false); }
 
     async function copyLink(){
       try {
@@ -1400,9 +1435,11 @@
   function openLightbox(index){
     showAt(index);
     lightbox.classList.add('show');
+    setOverlayOpen('lightbox', true);
   }
   function closeLightbox(){
     lightbox.classList.remove('show');
+    setOverlayOpen('lightbox', false);
   }
 
   galleryImgs.forEach((img, i)=>{
@@ -1493,9 +1530,16 @@
       card.scrollTop = 0;
     }
     function openRsvp(){
-      if (shouldShow()) { resetToStep1(); overlay.classList.add('show'); }
+      if (shouldShow()) {
+        resetToStep1();
+        overlay.classList.add('show');
+        setOverlayOpen('rsvp', true);
+      }
     }
-    function closeRsvp(){ overlay.classList.remove('show'); }
+    function closeRsvp(){
+      overlay.classList.remove('show');
+      setOverlayOpen('rsvp', false);
+    }
 
     document.addEventListener('invitationOpened', ()=>{
       setTimeout(openRsvp, 600);
