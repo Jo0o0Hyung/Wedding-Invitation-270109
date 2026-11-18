@@ -34,6 +34,7 @@
 
   /* 세로 스크롤만 허용해 확대(핀치·더블탭)를 막는다 */
   html { font-size: var(--fs-base); -webkit-text-size-adjust: 100%; touch-action: pan-y; }
+  body { touch-action: pan-y; }
 
   body {
     background: #cfd9c6;            /* 화면 양옆 여백 색 */
@@ -1105,9 +1106,18 @@
   const WEDDING_HOUR   = 12;   // 오후 12시
   const WEDDING_MINUTE = 0;
 
-  /* ---- 확대 막기: iOS는 viewport 설정을 무시하므로 두 손가락 동작을 직접 막는다 ---- */
+  /* ---- 확대 막기 ----
+     iOS 사파리는 viewport 설정을 무시하므로 두 손가락 제스처를 직접 막는다.
+     안드로이드 크롬은 보통 viewport 설정을 따르지만, 카카오톡·삼성인터넷 같은
+     인앱 브라우저는 그렇지 않은 경우가 있어 손가락이 둘 이상인 터치도 함께 막는다.
+     (한 손가락 스크롤은 그대로 두므로 스크롤 성능에는 영향이 없다) */
   ['gesturestart', 'gesturechange', 'gestureend'].forEach(function(type){
     document.addEventListener(type, function(e){ e.preventDefault(); }, { passive: false });
+  });
+  ['touchstart', 'touchmove'].forEach(function(type){
+    document.addEventListener(type, function(e){
+      if (e.touches.length > 1) e.preventDefault();
+    }, { passive: false });
   });
 
   /* ---- 캘린더 그리기 ---- */
